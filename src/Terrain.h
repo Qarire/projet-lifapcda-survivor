@@ -6,25 +6,26 @@ class Terrain {
 
     private:
         int dimx, dimy;
-        char * tabTerrain;
 
 
 public:
 
     Terrain();
-    //Constructeur par défaut;
+    /** @brief Constructeur par défaut; **/
 
     ~Terrain();
-    //Destructeur ;
+    /** @brief Destructeur ; **/
 
-    void getDimx();
-    //Recupere la dimension x du Terrain
+    int getDimx();
+    /** @brief Recupere la dimension x du Terrain **/
 
-    void getDimy();
-    //Recupere la dimension du y du Terrain
+    int getDimy();
+    /** @brief Recupere la dimension du y du Terrain **/
 
 
 
 
 
 };
+
+#endif

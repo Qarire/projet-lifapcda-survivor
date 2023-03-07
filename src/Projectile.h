@@ -18,8 +18,9 @@ class Projectile {
 		Vecteur getpos();
     	/** @brief recupere la position du projectile **/
     	
-    	void getvit();
+    	Vecteur getvit();
     	/** @brief recupere la vitesse du projectile **/
 	
 	
 
+#endif
