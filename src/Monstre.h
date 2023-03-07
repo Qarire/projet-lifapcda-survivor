@@ -3,6 +3,7 @@
 
 #include<iostream>
 #include"terrain.h"
+#include"Vecteur.h"
 
 using namespace std;
 
@@ -14,7 +15,7 @@ class Monstre
 	/**
   	 @brief x,y : les composantes du monstre, pv: ses pint de vie
   	 * */
-	int x,y;
+	Vecteur m_pos;
 	int pv;
 	
 	public :
@@ -38,12 +39,14 @@ class Monstre
 	void depBas    (const Terrain &t);
 	
 	/**
-     	@brief accesseur pour récuperer les coordonnées x,y des monstres, et leurs points de vie
+     	@brief accesseur pour récuperer les points de vie d'un monstre
      	**/
-     	
 	int getPV();
-	int getX();
-	int getY();
+	
+	/**
+     	@brief accesseur pour récuperer les coordonnées x,y d'un monstre
+     	**/
+	Vecteur getPos()const;
 	 
 	/**
      	@brief retourne un booleen qui indique si le monstre et mort ou pas
