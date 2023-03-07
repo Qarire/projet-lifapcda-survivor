@@ -41,12 +41,12 @@ class Monstre
 	/**
      	@brief accesseur pour récuperer les points de vie d'un monstre
      	**/
-	int getPV();
+	int getPV() const;
 	
 	/**
      	@brief accesseur pour récuperer les coordonnées x,y d'un monstre
      	**/
-	Vecteur getPos()const;
+	Vecteur getPos() const;
 	 
 	/**
      	@brief retourne un booleen qui indique si le monstre et mort ou pas

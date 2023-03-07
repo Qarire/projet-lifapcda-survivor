@@ -11,7 +11,7 @@ class Personnage {
 private :
 	Vecteur pos /* @brief les coordonnées x,y de notre personnage */
 	int pv; /* @brief les points de vie de notre personnage */
-	vector<Projectile> proj;  /* @brief  un tableau dynamique de projectile */
+
 	
 public :
 	Personnage(); /* @brief constructeur du personnage */

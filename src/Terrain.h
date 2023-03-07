@@ -16,14 +16,11 @@ public:
     ~Terrain();
     /** @brief Destructeur ; **/
 
-    int getDimx();
+    int getDimx() const;
     /** @brief Recupere la dimension x du Terrain **/
 
-    int getDimy();
+    int getDimy() const;
     /** @brief Recupere la dimension du y du Terrain **/
-
-
-
 
 
 };

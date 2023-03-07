@@ -1,0 +1,49 @@
+#ifndef _JEU_H
+#define _JEU_H
+
+#include "Terrain.h"
+#include "Personnage.h"
+#include "Monstre.h"
+#include "Projectile.h"
+
+
+class Jeu {
+private:
+    Terrain map;
+    Personnage joueur;
+    vector<Projectile> proj;
+    vector<Monstre> mob;
+
+public:
+    Jeu();
+    /** @brief Constructeur par défaut **/
+
+    ~Jeu();
+    /** @brief Destructeur par défaut **/
+
+    Personnage getPersonnage() const;
+    /** @brief recupere le Personnage **/
+
+    Terrain getTerrain() const;
+    /** @brief recupere le Terrain **/
+
+    Monstre getMonstre() const;
+    /** @brief recupere le Monstre **/
+
+    void degats_collision (Terrain &map, Monstre &mob, Personnage &joueur, Projectile &proj);
+    /** @brief Procédure qui gère les degats infliger entre un différente entité **/
+
+    void genereMonstre(const Terrain &map);
+    /** @brief Genere un monstre aleatoirement sur le terrain **/
+
+    void FinJeu (const Personnage &joueur);
+    /** @brief Test si le jeu est terminer ou non **/
+
+
+
+
+
+}
+
+
+#endif
