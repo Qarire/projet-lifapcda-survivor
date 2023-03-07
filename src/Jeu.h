@@ -36,6 +36,9 @@ public:
     void genereMonstre(const Terrain &map);
     /** @brief Genere un monstre aleatoirement sur le terrain **/
 
+    void genereProjectile(const Personnage &joueur)
+    /** @brief genere un Projectile sur la coordonnée du personnage **/
+
     void FinJeu (const Personnage &joueur);
     /** @brief Test si le jeu est terminer ou non **/
 
