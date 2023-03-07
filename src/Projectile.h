@@ -1,16 +1,25 @@
 #ifndef _PROJECTILE_H
 #define _PROJECTILE_H
 
+#include "Vecteur.h"
+
 class Projectile {
     private :
-	int x, y;
+	Vecteur pos, vit;
 	
     public:
-    	void getX();
-    	//recupere la coordonnée x
+
+		Projectile();
+		/** @brief Constructeur du projectile **/
+
+		~Projectile();
+		/** @brief Destructeur du projectile **/
+
+		Vecteur getpos();
+    	/** @brief recupere la position du projectile **/
     	
-    	void getY(); 
-    	//recupere la coordonnée y
+    	void getvit();
+    	/** @brief recupere la vitesse du projectile **/
 	
 	
 
