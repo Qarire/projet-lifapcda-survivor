@@ -16,9 +16,6 @@ public :
 	void depGauche(const Terrain &t);
 	/* @brief procédure pour se déplacer à gauche 
 	@param le terrain */
-	void depGauche(const Terrain &t);
-	/* @brief procédure pour se déplacer à gauche 
-	@param le terrain */
 	void depDroite(const Terrain &t);
 	/* @brief procédure pour se déplacer à droite 
 	@param le terrain */
