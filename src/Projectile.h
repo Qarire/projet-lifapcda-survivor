@@ -3,24 +3,30 @@
 
 #include "Vecteur.h"
 
+
+
 class Projectile {
     private :
-	Vecteur pos, vit;
 	
+	Vecteur p,v;
+
     public:
 
 		Projectile();
-		/** @brief Constructeur du projectile **/
+		/** @brief Constructeur par défaut du projectile **/
+
+		Projectile(Vecteur pos, Vecteur vit);
+		/** @brief Constructeur */
 
 		~Projectile();
 		/** @brief Destructeur du projectile **/
 
-		Vecteur getpos();
+		Vecteur getpos() const;
     	/** @brief recupere la position du projectile **/
     	
-    	Vecteur getvit();
+    	Vecteur getvit() const;
     	/** @brief recupere la vitesse du projectile **/
 	
 	
-
+}
 #endif

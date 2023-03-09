@@ -12,7 +12,10 @@ public:
 
     Terrain();
     /** @brief Constructeur par défaut; **/
-
+    
+    Terrain(int x, int y);
+    /** @brief Constructeur */
+    
     ~Terrain();
     /** @brief Destructeur ; **/
 
