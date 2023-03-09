@@ -8,26 +8,39 @@ private :
 
 public :
 
+    Vecteur();
+    /** @brief constructeur par défaut*/
+
+    Vecteur(float a, float b);
+    /** @brief constructeur */
+
+    ~Vecteur();
+    /** @brief destructeur */
+    
     float getX(); const
-    //Recupere la coordonnée X
+    /** @brief Recupere la coordonnée X */
 
     float getY(); const
-    //Recupere la coordonnée Y
+    /** @brief Recupere la coordonnée Y */
 
-    Vecteur make_vec(float x, float y);
-    //Fabrique un vecteur de coordonnée x,y
+    Vecteur operator+(float lambda);
+    /** @brief operation + avec un Vecteur et un réel */
 
-    Vecteur operator+(Vecteur a, float lambda);
-    //operation + avec un Vecteur et un réel
+    Vecteur operator-(float lambda);
+    /** @brief operation - avec un Vecteur et un réel */
 
-    Vecteur operator-(Vecteur a, float lambda);
-    //operation - avec un Vecteur et un réel
+    Vecteur operator*(float lambda);
+    /** @brief operation * avec un Vecteur et un réel */
 
-    Vecteur operator*(Vecteur a, float lambda);
-    //operation * avec un Vecteur et un réel
 
-    Vecteur operator/(Vecteur a, float lambda);
-    //operation / avec un Vecteyr et un réel
+    Vecteur operator+(Vecteur v);
+    /** @brief operation + avec deux Vecteurs */
+
+     Vecteur operator-(Vecteur v);
+    /** @brief operation - avec deux Vecteurs */
+
+
+ 
 
 
 }
