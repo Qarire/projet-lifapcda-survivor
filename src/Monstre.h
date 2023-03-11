@@ -47,6 +47,9 @@ class Monstre
      	**/
 	int getPV() const;
 	
+	void setPV(int hp);
+	/** @brief Mutateur pour modifier les points de vie d'un monstre*/
+	
 	/**
      	@brief accesseur pour récuperer les coordonnées x,y d'un monstre
      	**/

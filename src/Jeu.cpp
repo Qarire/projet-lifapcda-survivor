@@ -48,12 +48,14 @@ void Jeu::degats_collision(const Terrain &map, Monstre &mob, Personnage &joueur,
 
     if(proj.getpos() == mob.getPos())
     {
-        mob.pv = mob.getPV() - 25; //prend 25 points de degats par projectile
+        int new_pv_mob = mob.getPV() - 25; //prend 25 points de degats par projectile
+        mob.setPV(new_pv_mob);
     }
 
     if(joueur.getPos() == mob.getPos())
     {
-        joueur.pv = joueur.getPV() - 25; //prend 25 points de degats par projectile
+        int new_pv_joueur = joueur.getPV() - 25; //prend 25 points de degats par projectile
+        joueur.setPV(new_pv_joueur);
     }
 }
 

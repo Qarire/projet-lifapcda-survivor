@@ -30,6 +30,8 @@ public :
 	@param le terrain */
 	int getPV() const;
 	/* @brief renvoie les points de vie du personnage */
+	void setPV(int hp);
+	/** @brief modifie les points de vie du personnage */
 	Vecteur getPos()const;
 	/* @brief renvoie la position du personnage */
 	Projectile getProj() const;
