@@ -38,9 +38,11 @@ public :
     Vecteur operator+(Vecteur v);
     /** @brief operation + avec deux Vecteurs */
 
-     Vecteur operator-(Vecteur v);
+    Vecteur operator-(Vecteur v);
     /** @brief operation - avec deux Vecteurs */
 
+    bool operator==(Vecteur v);
+    /** @brief Operateur d'egalite entre deux vecteurs */
 
  
 

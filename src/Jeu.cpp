@@ -3,8 +3,11 @@
 #include "Personnage.h"
 #include "Monstre.h"
 #include "Projectile.h"
-#include "vector"
+#include <vector>
+
 #include <iostream>
+#include<stdlib.h>
+#include<time.h>
 
 using namespace std;
 
@@ -28,19 +31,29 @@ Terrain Jeu::getTerrain() const {
 
 void Jeu::genereMonstre(const Terrain &map) {
 
-    mob.push_back(Monstre(Vecteur(rand()%map.getDimx(),rand()%map.getDimy()),1));
+    srand((unsigned int)time(NULL));
+    mob.push_back(Monstre(Vecteur(rand()%map.getDimx(),rand()%map.getDimy()),50)); //Création d'un monstre avec 50pv aleatoirement sur la map
+                                                                                   // en fin de tableau
 }
 
 
 
 void Jeu::genereProjectile(const Personnage &joueur){ 
 
-    proj.push_back(Projectile(joueur.getPos(),Vecteur()));
+    proj.push_back(Projectile(joueur.getPos(),Vecteur())); //Création d'un projectile sur la position du joueur avec une vitesse par défaut
 }
 
 
-void Jeu::degats_collision(const Terrain &map, Monstre &mob, Personnage &joueur, Projectile &proj) {
+void Jeu::degats_collision(const Terrain &map, Monstre &mob, Personnage &joueur,const Projectile &proj) {
 
-    
+    if(proj.getpos() == mob.getPos())
+    {
+        mob.pv = mob.getPV() - 25; //prend 25 points de degats par projectile
+    }
+
+    if(joueur.getPos() == mob.getPos())
+    {
+        joueur.pv = joueur.getPV() - 25; //prend 25 points de degats par projectile
+    }
 }
 

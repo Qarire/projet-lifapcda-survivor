@@ -76,3 +76,14 @@ Vecteur Vecteur::operator-(Vecteur v){
     return res;
 }
 
+bool Vecteur::operator==(Vecteur v) {
+
+    if(x == v.x && y == v.y)
+    {
+        return true;
+    }else
+    {
+        return false;
+    }
+        
+}
