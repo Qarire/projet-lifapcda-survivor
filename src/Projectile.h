@@ -28,5 +28,6 @@ class Projectile {
     	/** @brief recupere la vitesse du projectile **/
 	
 	
-}
+};
+
 #endif

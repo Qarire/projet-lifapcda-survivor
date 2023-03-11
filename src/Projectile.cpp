@@ -14,10 +14,11 @@ Projectile::Projectile(Vecteur pos, Vecteur vit){
     v = vit;                
 }
 
-Projectile::~Projectile(){
-    p = nullptr;
-    v = nullptr;
+/*
+Projectile::~Projectile() {
+
 }
+*/
 
 Vecteur Projectile::getpos() const {
 

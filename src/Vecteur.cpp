@@ -14,53 +14,65 @@ Vecteur::Vecteur(float a, float b) {
     y = b;
 }
 
-void Vecteur::getX() const {
+float Vecteur::getX() const {
 
     return x;
 }
 
-void Vecteur::getY() const {
+float Vecteur::getY() const {
 
     return y;
 }
 
 
-Vecteur Vecteur::operator+(float lambda){
+Vecteur Vecteur::operator+(float lambda) {
     
-    x = x + lambda;
-    y = y + lambda;
+    Vecteur res;
+    
+    res.x = x + lambda;
+    res.y = y + lambda;
 
-    return this;
+    return res;
 }
     
-Vecteur Vecteur::operator-(float lambda){
+Vecteur Vecteur::operator-(float lambda) {
     
-    x = x - lambda;
-    y = y - lambda;
+    Vecteur res;
+    
+    res.x = x - lambda;
+    res.y = y - lambda;
 
-    return this;
+    return res;
 }
 
 Vecteur Vecteur::operator*(float lambda){
     
-    x = x * lambda;
-    y = y * lambda;
+    Vecteur res;
+    
+    res.x = x * lambda;
+    res.y = y * lambda;
 
-    return this;
+    return res;
 }
 
 
 Vecteur Vecteur::operator+(Vecteur v){
-    x = x + v.getX();
-    y = y + v.getY();
+    
+    Vecteur res;
 
-    return this;
+    res.x = x + v.getX();
+    res.y = y + v.getY();
+
+    return res;
 }
 
 Vecteur Vecteur::operator-(Vecteur v){
-    x = x - v.getX();
-    y = y - v.getY();
+    
+    Vecteur res;
 
-    return this;
+    res.x = x - v.getX();
+    res.y = y - v.getY();
+
+    return res;
 }
 

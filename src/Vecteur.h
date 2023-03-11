@@ -3,7 +3,9 @@
 
 
 class Vecteur {
+
 private :
+    
     float x,y;
 
 public :
@@ -17,10 +19,10 @@ public :
     ~Vecteur();
     /** @brief destructeur */
     
-    float getX(); const
+    float getX() const;
     /** @brief Recupere la coordonnée X */
 
-    float getY(); const
+    float getY() const;
     /** @brief Recupere la coordonnée Y */
 
     Vecteur operator+(float lambda);
@@ -43,6 +45,5 @@ public :
  
 
 
-}
-
+};
 #endif
