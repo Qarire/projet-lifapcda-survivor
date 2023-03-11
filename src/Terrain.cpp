@@ -14,17 +14,18 @@ Terrain::Terrain(int x, int y){
     dimy = y;
 }
 
+/*
 Terrain::~Terrain(){
-    dimx = nullptr;
-    dimy = nullptr;
+   
 }
+*/
 
-int Terrain::getDimx(){
+int Terrain::getDimx() const {
     
     return dimx;
 }
 
-int Terrain::getDimy(){
+int Terrain::getDimy() const {
     
     return dimy;
 }

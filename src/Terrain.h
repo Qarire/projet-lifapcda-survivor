@@ -4,9 +4,9 @@
 
 class Terrain {
 
-    private:
-        int dimx, dimy;
-
+private:
+    
+    int dimx, dimy;
 
 public:
 

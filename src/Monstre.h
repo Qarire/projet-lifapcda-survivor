@@ -2,8 +2,9 @@
 #define _MONSTRE
 
 #include<iostream>
-#include"terrain.h"
+#include"Terrain.h"
 #include"Vecteur.h"
+#include"Personnage.h"
 
 using namespace std;
 
@@ -23,12 +24,12 @@ class Monstre
      	@brief Constructeur par défaut de la classe: initialise la position de monstre, ses points de vie
     	 **/
     	 
-     	monstre();
+     	Monstre();
     	 /**
     	 @brief destructeur par défaut de la classe: initialise la position de monstre, ses points de vie
    	  **/
    	  
-   	  ~monstre();
+   	  ~Monstre();
    	   /**
    	  @brief fonctions permettant de gerer et modifier les coordonnées des monstre sur le terrain 
    	  **/

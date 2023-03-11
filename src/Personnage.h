@@ -9,7 +9,7 @@ using namespace std;
 
 class Personnage {
 private :
-	Vecteur pos /* @brief les coordonnées x,y de notre personnage */
+	Vecteur pos; /* @brief les coordonnées x,y de notre personnage */
 	int pv; /* @brief les points de vie de notre personnage */
 
 	
@@ -33,10 +33,10 @@ public :
 	Vecteur getPos()const;
 	/* @brief renvoie la position du personnage */
 	Projectile getProj() const;
-	/* @brief renvoie le projectile du personnage
+	/* @brief renvoie le projectile du personnage */
 	bool enVie() const;
 	/* @brief renvoie true si le personnage est en vie et false si le personnage est mort */
-}
+};
 
 
 #endif
