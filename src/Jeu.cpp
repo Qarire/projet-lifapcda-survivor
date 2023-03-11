@@ -12,7 +12,8 @@ Jeu::Jeu() {
 
     map = Terrain();
     joueur = Personnage();
-    
+    mob.at(0) = Monstre();
+    proj.at(0) = Projectile();
 }
 
 Personnage Jeu::getPersonnage() const {
@@ -23,6 +24,18 @@ Personnage Jeu::getPersonnage() const {
 Terrain Jeu::getTerrain() const {
     
     return map;
+}
+
+void Jeu::genereMonstre(const Terrain &map) {
+
+    mob.push_back(Monstre(Vecteur(rand()%map.getDimx(),rand()%map.getDimy()),1));
+}
+
+
+
+void Jeu::genereProjectile(const Personnage &joueur){ 
+
+    proj.push_back(Projectile(joueur.getPos(),Vecteur()));
 }
 
 

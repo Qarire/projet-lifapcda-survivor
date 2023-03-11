@@ -28,16 +28,19 @@ class Monstre
     	 /**
     	 @brief destructeur par défaut de la classe: initialise la position de monstre, ses points de vie
    	  **/
+	 	Monstre(Vecteur p, int hp);
+		/** @brief Constructeur  */
+
+
+   	  	~Monstre();
+   	   	/**
+   	  	@brief fonctions permettant de gerer et modifier les coordonnées des monstre sur le terrain 
+   	  	**/
    	  
-   	  ~Monstre();
-   	   /**
-   	  @brief fonctions permettant de gerer et modifier les coordonnées des monstre sur le terrain 
-   	  **/
-   	  
-	void depGauche (const Terrain &t);
-	void depDroite (const Terrain &t);
-	void depHaut   (const Terrain &t);
-	void depBas    (const Terrain &t);
+		void depGauche (const Terrain &t);
+		void depDroite (const Terrain &t);
+		void depHaut   (const Terrain &t);
+		void depBas    (const Terrain &t);
 	
 	/**
      	@brief accesseur pour récuperer les points de vie d'un monstre

@@ -30,10 +30,10 @@ public:
     Monstre getMonstre() const;
     /** @brief recupere le Monstre **/
 
-    void degats_collision (const Terrain &map, Monstre &mob, Personnage &joueur, Projectile &proj);
+    void degats_collision (Terrain &map, Monstre &mob, Personnage &joueur, Projectile &proj);
     /** @brief Procédure qui gère les degats infliger entre un différente entité **/
 
-    void genereMonstre(const Terrain &map);
+    void genereMonstre();
     /** @brief Genere un monstre aleatoirement sur le terrain **/
 
     void genereProjectile(const Personnage &joueur);
