@@ -28,30 +28,24 @@ float Vecteur::getY() const {
 Vecteur Vecteur::operator+(float lambda) {
     
     Vecteur res;
-    
     res.x = x + lambda;
     res.y = y + lambda;
-
     return res;
 }
     
 Vecteur Vecteur::operator-(float lambda) {
     
     Vecteur res;
-    
     res.x = x - lambda;
     res.y = y - lambda;
-
     return res;
 }
 
 Vecteur Vecteur::operator*(float lambda){
     
     Vecteur res;
-    
     res.x = x * lambda;
     res.y = y * lambda;
-
     return res;
 }
 
@@ -59,7 +53,6 @@ Vecteur Vecteur::operator*(float lambda){
 Vecteur Vecteur::operator+(Vecteur v){
     
     Vecteur res;
-
     res.x = x + v.getX();
     res.y = y + v.getY();
 
@@ -72,18 +65,20 @@ Vecteur Vecteur::operator-(Vecteur v){
 
     res.x = x - v.getX();
     res.y = y - v.getY();
-
     return res;
 }
 
-bool Vecteur::operator==(Vecteur v) {
+bool Vecteur::operator==(Vecteur v) 
+{
+        return (x == v.x && y == v.y); 
+}
 
-    if(x == v.x && y == v.y)
-    {
-        return true;
-    }else
-    {
-        return false;
-    }
-        
+void Vecteur::setX(float cordX)
+{
+	x=cordX;
+}
+
+void Vecteur::setX(float cordY)
+{
+	y=cordY;
 }
