@@ -16,7 +16,7 @@ $(BIN_DIR)/main_SDL: $(OBJ_DIR)/main_SDL.o $(OBJ_DIR)/Personnage.o $(OBJ_DIR)/Mo
 	$(CC) $(OBJ_DIR)/main_SDL.o $(OBJ_DIR)/Personnage.o $(OBJ_DIR)/Monstre.o $(OBJ_DIR)/Projectile.o $(OBJ_DIR)/Terrain.o $(OBJ_DIR)/Vecteur.o $(OBJ_DIR)/Jeu.o  -o $(BIN_DIR)/main_SDL $(LIBS_SDL)
 
 
-$(BIN_DIR)/main_TXT: $(OBJ_DIR)/main_TX.o $(OBJ_DIR)/Personnage.o $(OBJ_DIR)/Monstre.o $(OBJ_DIR)/Projectile.o $(OBJ_DIR)/Terrain.o $(OBJ_DIR)/Vecteur.o $(OBJ_DIR)/Jeu.o 
+$(BIN_DIR)/main_TXT: $(OBJ_DIR)/main_TXT.o $(OBJ_DIR)/Personnage.o $(OBJ_DIR)/Monstre.o $(OBJ_DIR)/Projectile.o $(OBJ_DIR)/Terrain.o $(OBJ_DIR)/Vecteur.o $(OBJ_DIR)/Jeu.o 
 	$(CC) $(OBJ_DIR)/main_TXT.o $(OBJ_DIR)/Personnage.o $(OBJ_DIR)/Monstre.o $(OBJ_DIR)/Projectile.o $(OBJ_DIR)/Terrain.o $(OBJ_DIR)/Vecteur.o $(OBJ_DIR)/Jeu.o  -o $(BIN_DIR)/main_TXT $(LIBS_SDL)
 
 
