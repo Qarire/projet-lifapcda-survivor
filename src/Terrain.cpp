@@ -29,3 +29,7 @@ int Terrain::getDimy() const {
     
     return dimy;
 }
+
+bool Terrain::positionValide(const int x, const int y) const{
+    return (((x>=0) && (x<=dimx)) && ((y>=0) && (y<=dimy)));
+ }

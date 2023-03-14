@@ -24,7 +24,7 @@ public:
 
     int getDimy() const;
     /** @brief Recupere la dimension du y du Terrain **/
-
+    bool positionValide(const int x, const int y) const;
 
 };
 
