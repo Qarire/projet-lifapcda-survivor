@@ -24,7 +24,7 @@ Personnage::~Personnage()   // destructeur
 //--------------------- Gérer les déplacements et la position du personnage : ----------------------- 
 void Personnage::depGauche(const Terrain &t)
 {	
-	if (t.positionValide(pos.getX,pos.getY))
+	if (t.positionValide(pos.getX(),pos.getY()))
 	{
 		pos.setX(pos.getX() +1.0);
 	}
@@ -33,7 +33,7 @@ void Personnage::depGauche(const Terrain &t)
 
 void Personnage::depDroite(const Terrain &t)
 {	
-	if (t.positionValide(pos.getX,pos.getY))
+	if (t.positionValide(pos.getX(),pos.getY()))
 	{
 		pos.setX(pos.getX() +1.0);
 	}
@@ -42,7 +42,7 @@ void Personnage::depDroite(const Terrain &t)
 
 void Personnage::depHaut(const Terrain &t)
 {
-	if (t.positionValide(pos.getX,pos.getY))
+	if (t.positionValide(pos.getX(),pos.getY()))
 	{
 		pos.setY(pos.getY() +1.0);
 	}
@@ -51,7 +51,7 @@ void Personnage::depHaut(const Terrain &t)
 
 void Personnage::depBas(const Terrain &t)
 {
-	if (t.positionValide(pos.getX,pos.getY))
+	if (t.positionValide(pos.getX(),pos.getY()))
 	{
 		pos.setY(pos.getY() -1.0);
 	}
