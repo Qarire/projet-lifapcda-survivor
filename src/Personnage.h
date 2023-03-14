@@ -16,8 +16,15 @@ private :
 public :
 	Personnage();
 	 /* @brief constructeur du personnage */
+
+	 Personnage(Vecteur p, int hp);
+	/** @brief constructeur par copie*/
+
+	
 	~Personnage(); 
 	/* @brief destructeur */
+	
+	
 	
 	void depGauche(const Terrain &t);
 	/* @brief procédure pour se déplacer à gauche 
