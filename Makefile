@@ -12,7 +12,7 @@ all: $(BIN_DIR)/main_SDL
 
 
 $(BIN_DIR)/main_SDL: $(OBJ_DIR)/main_SDL.o $(OBJ_DIR)/Personnage.o $(OBJ_DIR)/Monstre.o $(OBJ_DIR)/Projectile.o $(OBJ_DIR)/Terrain.o $(OBJ_DIR)/Vecteur.o $(OBJ_DIR)/Jeu.o 
-	$(CC) $(OBJ_DIR)/main_SDL.o $(OBJ_DIR)/Personnage.o $(OBJ_DIR)/Monstre.o $(OBJ_DIR)/Projectile.o $(OBJ_DIR)/Terrain.o $(OBJ_DIR)/Vecteur.o $(OBJ_DIR)/Jeu.o $(LIBS_SDL)  -o $(BIN_DIR)/main_SDL 
+	$(CC) $(OBJ_DIR)/main_SDL.o $(OBJ_DIR)/Personnage.o $(OBJ_DIR)/Monstre.o $(OBJ_DIR)/Projectile.o $(OBJ_DIR)/Terrain.o $(OBJ_DIR)/Vecteur.o $(OBJ_DIR)/Jeu.o  -o $(BIN_DIR)/main_SDL 
 
 	
 $(OBJ_DIR)/Vecteur.o: $(SRC_DIR)/Vecteur.cpp $(SRC_DIR)/Vecteur.h
