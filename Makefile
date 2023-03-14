@@ -33,7 +33,8 @@ $(OBJ_DIR)/Monstre.o: $(SRC_DIR)/Monstre.cpp $(SRC_DIR)/Monstre.h $(SRC_DIR)/Pro
 $(OBJ_DIR)/Jeu.o: $(SRC_DIR)/Jeu.cpp $(SRC_DIR)/Jeu.h $(SRC_DIR)/Projectile.h $(SRC_DIR)/Terrain.h $(SRC_DIR)/Vecteur.h $(SRC_DIR)/Personnage.h $(SRC_DIR)/Monstre.h
 	$(CC) -c $(SRC_DIR)/Jeu.cpp -o $(OBJ_DIR)/Jeu.o
 
-$(OBJ_DIR)/main_SDL.o: $(SRC_DIR)/Personnage.cpp $(SRC_DIR)/Personnage.h $(SRC_DIR)/Projectile.h $(SRC_DIR)/Terrain.h (SRC_DIR)/Vecteur.h
+#A completer
+$(OBJ_DIR)/main_SDL.o: $(SRC_DIR)/Personnage.cpp $(SRC_DIR)/Personnage.h $(SRC_DIR)/Projectile.h $(SRC_DIR)/Terrain.h $(SRC_DIR)/Vecteur.h
 	$(CC) -c $(SRC_DIR)/main_SDL.cpp -o $(OBJ_DIR)/main_SDL.o
 
 	
