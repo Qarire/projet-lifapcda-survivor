@@ -61,3 +61,6 @@ void Jeu::degats_collision(const Terrain &map, Monstre &mob, Personnage &joueur,
     }
 }
 
+bool FinJeu (const Personnage &joueur){
+    return(joueur.enVie()==false);
+}
