@@ -17,7 +17,7 @@ class Monstre
   	 @brief x,y : les composantes du monstre, pv: ses pint de vie
   	 * */
 	Vecteur m_pos;
-	int pv;
+	int m_pv;
 	
 	public :
 	 /**
@@ -58,13 +58,15 @@ class Monstre
 	/**
      	@brief retourne un booleen qui indique si le monstre et mort ou pas
      	**/
-	bool enVie();
+	void setPos(Vecteur position);
+	/** @brief modifie le vecteur position du monstre */
+	bool enVie() const;
+	/* @brief renvoie true si le monstre est en vie et false si le monstre est mort */
 	
+	void poursuitePerso(const Terrain &t, const Personnage &p);
 	/**
      	@brief procédure qui permet au monstre de suivre le pernonnage
-     	**/
-	void poursuitePerso(const Terrain &t, const Personnage &p);
-		 
+    **/	 
 };
 
 #endif
