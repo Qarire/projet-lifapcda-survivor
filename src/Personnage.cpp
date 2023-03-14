@@ -18,7 +18,9 @@ Personnage::Personnage(Vecteur p, int hp) {
 
 Personnage::~Personnage()   // destructeur
 {
-	
+	pos.setX(0);
+	pos.setY(0);
+	pv=0;
 }
 
 //--------------------- Gérer les déplacements et la position du personnage : ----------------------- 
@@ -44,7 +46,7 @@ void Personnage::depHaut(const Terrain &t)
 {
 	if (t.positionValide(pos.getX(),pos.getY()))
 	{
-		pos.setY(pos.getY() +1.0);
+		pos.setY(pos.getY() -1.0);
 	}
 	
 }
@@ -53,7 +55,7 @@ void Personnage::depBas(const Terrain &t)
 {
 	if (t.positionValide(pos.getX(),pos.getY()))
 	{
-		pos.setY(pos.getY() -1.0);
+		pos.setY(pos.getY() +1.0);
 	}
 	
 }
@@ -87,3 +89,9 @@ void Personnage::setPos(Vecteur position) // Modifier le vecteur position du per
 	pos = position;
 }
 
+/* void Personnage::setPos(const float x, const float y) // Modifier le vecteur position du personnage
+{
+	pos.setX(x);
+	pos.setY(y);
+}
+*/
