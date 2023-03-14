@@ -75,10 +75,10 @@ bool Vecteur::operator==(Vecteur v)
 
 void Vecteur::setX(float cordX)
 {
-	x=cordX;
+	x = cordX;
 }
 
 void Vecteur::setY(float cordY)
 {
-	y=cordY;
+	y = cordY;
 }

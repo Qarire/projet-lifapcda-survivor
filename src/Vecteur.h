@@ -44,10 +44,10 @@ public :
     bool operator==(Vecteur v);
     /** @brief Operateur d'egalite entre deux vecteurs */
 
- 	void setX();
+ 	void setX(float x);
  	/** @brief modifier la coordonnée X du vecteur */
  	
- 	void setY();
+ 	void setY(float y);
 	/** @brief modifier la coordonnée Y du vecteur */
 
 };
