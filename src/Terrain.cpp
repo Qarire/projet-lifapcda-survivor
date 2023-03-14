@@ -14,11 +14,11 @@ Terrain::Terrain(int x, int y){
     dimy = y;
 }
 
-/*
+
 Terrain::~Terrain(){
    
 }
-*/
+
 
 int Terrain::getDimx() const {
     

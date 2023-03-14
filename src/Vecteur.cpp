@@ -14,6 +14,10 @@ Vecteur::Vecteur(float a, float b) {
     y = b;
 }
 
+Vecteur::~Vecteur(){
+
+}
+
 float Vecteur::getX() const {
 
     return x;

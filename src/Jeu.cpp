@@ -18,7 +18,9 @@ Jeu::Jeu() {
     mob.at(0) = Monstre();
     proj.at(0) = Projectile();
 }
-
+Jeu::~Jeu(){
+    
+}
 Personnage Jeu::getPersonnage() const {
 
     return joueur;
