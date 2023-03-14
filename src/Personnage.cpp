@@ -62,16 +62,9 @@ void Personnage::setPV(int hp)
 
 Vecteur Personnage::getPos()const // Recuperer les coordonnées du personnage
 {
-	Vecteur position;
-	position.setX(getX());
-	position.setY(getY());
-	return position;
+	return pos;
 }
 
-Projectile Vecteur::getProj() const
-{
-	/...
-}
 
 bool Personnage::enVie() const  // tant que les pv du perso sont superieur à 0, il est en vie
 {

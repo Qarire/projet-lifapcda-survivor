@@ -38,8 +38,6 @@ public :
 	/** @brief modifie les points de vie du personnage */
 	Vecteur getPos()const;
 	/* @brief renvoie la position du personnage */
-	Projectile getProj() const;
-	/* @brief renvoie le projectile du personnage */
 	bool enVie() const;
 	/* @brief renvoie true si le personnage est en vie et false si le personnage est mort */
 	void setPos(Vecteur position);

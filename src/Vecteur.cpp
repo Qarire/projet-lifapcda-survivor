@@ -78,7 +78,7 @@ void Vecteur::setX(float cordX)
 	x=cordX;
 }
 
-void Vecteur::setX(float cordY)
+void Vecteur::setY(float cordY)
 {
 	y=cordY;
 }
