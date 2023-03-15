@@ -30,6 +30,15 @@ Terrain Jeu::getTerrain() const {
     
     return map;
 }
+/*
+Monstre Jeu::getMonstre() const {
+    
+    return mob;
+}*/
+
+vector<Monstre> Jeu::getVectorMonstre() const {
+    return mob;
+}
 
 void Jeu::genereMonstre(const Terrain &map) {
 
@@ -61,6 +70,36 @@ void Jeu::degats_collision(const Terrain &map, Monstre &mob, Personnage &joueur,
     }
 }
 
-bool FinJeu (const Personnage &joueur){
-    return(joueur.enVie()==false);
+bool Jeu::FinJeu (const Personnage &joueur){
+    return(joueur.enVie());
+}
+
+bool Jeu::actionClavier(const char touche) {
+    switch(touche) {
+        case 'z' :
+            joueur.depHaut(map);
+            break;
+        
+        case 'q' :
+            joueur.depDroite(map);
+            break;
+        
+        case 'd' :
+            joueur.depGauche(map);
+            break;
+        
+        case 's' : joueur.depBas(map);
+
+    }
+
+    return false;
+}
+
+void Jeu::actionAutomatiques() {
+    
+    for(unsigned int i=0;i<mob.size();i++)
+    {
+        mob.at(i).poursuitePerso(map,joueur);
+    }
+
 }
