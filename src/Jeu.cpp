@@ -12,11 +12,10 @@
 using namespace std;
 
 Jeu::Jeu() {
-
     map = Terrain();
     joueur = Personnage();
-    mob.at(0) = Monstre();
-    proj.at(0) = Projectile();
+    mob.push_back(Monstre());
+    proj.push_back(Projectile());
 }
 Jeu::~Jeu(){
     
