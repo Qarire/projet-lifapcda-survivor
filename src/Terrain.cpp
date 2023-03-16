@@ -5,8 +5,8 @@ using namespace std;
 
 
 Terrain::Terrain(){
-    dimx = 250;
-    dimy = 250;
+    dimx = 50;
+    dimy = 50;
 }
 
 Terrain::Terrain(int x, int y){

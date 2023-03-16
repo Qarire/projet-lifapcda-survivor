@@ -48,7 +48,7 @@ void txtBoucle (Jeu & jeu) {
 		#else
 		usleep(100000);
         #endif // WIN32
-
+		jeu.genereMonstre(jeu.getTerrain());
 		jeu.actionAutomatiques();
 
 		int c = win.getCh();

@@ -6,7 +6,7 @@ using namespace std;
 	
 Personnage::Personnage()  // initialiser la position du joueur au milieu du terrain
 {
-	pos = Vecteur();
+	pos = Vecteur(25,25);
 	pv = 100;
 }
 
@@ -28,7 +28,7 @@ void Personnage::depGauche(const Terrain &t)
 {	
 	if (t.positionValide(pos.getX(),pos.getY()))
 	{
-		pos.setX(pos.getX() +1.0);
+		pos.setX(pos.getX() -1.0);
 	}
 	
 }

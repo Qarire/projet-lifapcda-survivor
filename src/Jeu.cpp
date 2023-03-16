@@ -79,11 +79,11 @@ bool Jeu::actionClavier(const char touche) {
             joueur.depHaut(map);
             break;
         
-        case 'q' :
+        case 'd' :
             joueur.depDroite(map);
             break;
         
-        case 'd' :
+        case 'q' :
             joueur.depGauche(map);
             break;
         
