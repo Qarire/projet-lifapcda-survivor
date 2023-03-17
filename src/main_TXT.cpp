@@ -17,20 +17,35 @@ using namespace std;
 void txtAff(WinTXT & win, const Jeu & jeu) {
 	const Terrain &ter = jeu.getTerrain();
 	const Personnage &per = jeu.getPersonnage();
-	/*const Monstre &mon = jeu.getMonstre();*/
 	const vector<Monstre> &mon = jeu.getVectorMonstre();
 	win.clear();
 	
-	//Affichage
+	//Affichage du Personnage
 	win.print(per.getPos().getX(),per.getPos().getY(),'P');
 	
-	/*win.print(mon.getPos().getX(),mon.getPos().getY(),'M');*/
-
+	//Affichage des Monstres
 	for(unsigned int i=0;i<mon.size();i++)	
 	{
 		win.print(mon.at(i).getPos().getX(),mon.at(i).getPos().getY(),'M');
 	}
 
+	//Affichage du Terrain
+	for(unsigned int i=0;i<ter.getDimx();i++) // 1ere ligne horizontale
+	{
+		win.print(i,0,'*');
+	}
+
+	for(unsigned int j=0;j<ter.getDimy();j++) //Les 2 lignes verticales
+	{
+		win.print(0,j,'*');
+		win.print(ter.getDimx()-1,j,'*');
+	}
+
+	for(unsigned int i=0;i<ter.getDimx();i++) // 2e ligne horizontale
+	{
+		win.print(i,ter.getDimy()-1,'*');
+	}
+	
 	win.draw();
 }
 
@@ -48,7 +63,7 @@ void txtBoucle (Jeu & jeu) {
 		#else
 		usleep(100000);
         #endif // WIN32
-		jeu.genereMonstre(jeu.getTerrain());
+		//jeu.genereMonstre(jeu.getTerrain());
 		jeu.actionAutomatiques();
 
 		int c = win.getCh();

@@ -12,8 +12,8 @@
 using namespace std;
 
 Jeu::Jeu() {
-    map = Terrain();
-    joueur = Personnage();
+    map = Terrain(30,30);
+    joueur = Personnage(Vecteur(5,5),100);
     mob.push_back(Monstre());
     proj.push_back(Projectile());
 }
