@@ -9,7 +9,7 @@ Terrain::Terrain(){
     dimy = 50;
 }
 
-Terrain::Terrain(int x, int y){
+Terrain::Terrain(unsigned int x,unsigned int y){ 
     dimx = x;
     dimy = y;
 }
@@ -20,12 +20,12 @@ Terrain::~Terrain(){
 }
 
 
-int Terrain::getDimx() const {
+unsigned int Terrain::getDimx() const {
     
     return dimx;
 }
 
-int Terrain::getDimy() const {
+unsigned int Terrain::getDimy() const {
     
     return dimy;
 }

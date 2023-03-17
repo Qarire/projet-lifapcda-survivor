@@ -27,7 +27,7 @@ public:
     Terrain getTerrain() const;
     /** @brief recupere le Terrain **/
     
-    //Monstre getMonstre() const;
+    Monstre getMonstre() const;
     /** @brief recupere le Monstre **/
 
     vector<Monstre> getVectorMonstre() const;
@@ -51,7 +51,9 @@ public:
 
     void actionAutomatiques();
     /** @brief action automatique, notamment déplacement auto des monstres et tire projectile*/
-
+    
+    void dessinBordures(const Terrain &map);
+     /** @brief Dessiner les bordures de la map */
 };
 
 
