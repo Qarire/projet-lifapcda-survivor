@@ -4,7 +4,7 @@
 #include "Monstre.h"
 #include "Projectile.h"
 #include <vector>
-
+#include <ctime>
 #include <iostream>
 #include<stdlib.h>
 #include<time.h>
@@ -12,14 +12,25 @@
 using namespace std;
 
 Jeu::Jeu() {
-    map = Terrain(140,30);
-    joueur = Personnage(Vecteur(5,5),100);
+    map = Terrain(50,50);
+    joueur = Personnage(Vecteur(25,25),100);
     mob.push_back(Monstre());
     proj.push_back(Projectile());
 }
 Jeu::~Jeu(){
-    
 }
+    
+int Jeu::gettemps() const
+{
+    return temps;
+}
+
+void Jeu::settemps(int t)
+{
+    temps=t;
+}
+
+
 Personnage Jeu::getPersonnage() const {
 
     return joueur;
@@ -45,13 +56,11 @@ vector<Projectile> Jeu::getVectorProjectile() const
 }
 
 void Jeu::genereMonstre(const Terrain &map) {
+    //Création d'un monstre avec 50pv aleatoirement sur la map en fin de tableau*/
+    mob.push_back(Monstre(Vecteur(rand()%map.getDimx(),rand()%map.getDimy()),50));
+        
 
-    srand((unsigned int)time(NULL));
-    mob.push_back(Monstre(Vecteur(rand()%map.getDimx(),rand()%map.getDimy()),50)); //Création d'un monstre avec 50pv aleatoirement sur la map
-                                                                                   // en fin de tableau
 }
-
-
 
 void Jeu::genereProjectile(const Personnage &joueur){ 
 

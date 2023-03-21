@@ -20,7 +20,7 @@ public:
     int gettemps()const;
 
 /** @brief modifier le temps **/
-    int settemps(int t);
+    void settemps(int t);
 
     Jeu();
     /** @brief Constructeur par défaut **/
