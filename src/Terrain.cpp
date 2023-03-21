@@ -1,6 +1,6 @@
 #include "Terrain.h"
 #include<iostream>
-
+#include<math.h>
 using namespace std;
 
 
@@ -33,3 +33,8 @@ unsigned int Terrain::getDimy() const {
 bool Terrain::positionValide(const int x, const int y) const{
     return (((x>=0) && (x<=dimx)) && ((y>=0) && (y<=dimy)));
  }
+
+float Terrain::getDistance (float x1, float y1, float x2, float y2) const 
+{
+    return (sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) ));
+}

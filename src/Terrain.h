@@ -26,6 +26,10 @@ public:
     /** @brief Recupere la dimension du y du Terrain **/
     bool positionValide(const int x, const int y) const;
 
+    float getDistance (float x1, float y1, float x2, float y2) const ;
+	/**
+     	@brief fonction qui permet de calculer et retourné la distance entre deux points sur le terrain
+    **/	 
 };
 
 #endif
