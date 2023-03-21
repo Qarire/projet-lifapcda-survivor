@@ -33,6 +33,9 @@ public:
     vector<Monstre> getVectorMonstre() const;
     /** @brief recupere le tableau dynamique de monstre */
 
+    vector<Projectile> getVectorProjectile() const;
+    /** @brief recupere le tableau dynamique de projectile*/
+
     void degats_collision (const Terrain &map, Monstre &mob, Personnage &joueur,const Projectile &proj);
     /** @brief Procédure qui gère les degats infliger entre un différente entité **/
 

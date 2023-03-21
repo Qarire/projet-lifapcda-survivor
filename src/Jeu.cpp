@@ -12,7 +12,7 @@
 using namespace std;
 
 Jeu::Jeu() {
-    map = Terrain(30,30);
+    map = Terrain(140,30);
     joueur = Personnage(Vecteur(5,5),100);
     mob.push_back(Monstre());
     proj.push_back(Projectile());
@@ -37,6 +37,11 @@ Monstre Jeu::getMonstre() const {
 
 vector<Monstre> Jeu::getVectorMonstre() const {
     return mob;
+}
+
+vector<Projectile> Jeu::getVectorProjectile() const
+{
+    return proj;
 }
 
 void Jeu::genereMonstre(const Terrain &map) {
