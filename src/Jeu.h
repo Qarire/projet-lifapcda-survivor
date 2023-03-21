@@ -9,12 +9,19 @@
 
 class Jeu {
 private:
+    int temps;
     Terrain map;
     Personnage joueur;
     vector<Projectile> proj;
     vector<Monstre> mob;
 
 public:
+    /** @brief recupere le temps **/
+    int gettemps()const;
+
+/** @brief modifier le temps **/
+    int settemps(int t);
+
     Jeu();
     /** @brief Constructeur par défaut **/
 
