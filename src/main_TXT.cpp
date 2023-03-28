@@ -63,8 +63,8 @@ void txtBoucle (Jeu & jeu) {
 		#else
 		usleep(100000);
         #endif // WIN32
+		jeu.genereMonstre(jeu.getTerrain());
 		jeu.actionAutomatiques();
-		clock_t debut = clock();
 		int c = win.getCh();
 		switch (c) {
 				case 'z':
@@ -83,21 +83,13 @@ void txtBoucle (Jeu & jeu) {
 				stop = true; 		//Touche b pour stoper le jeu
 				break;	
 		}
-      clock_t fin = clock();
-	  int duree = (int)(fin - debut) / CLOCKS_PER_SEC;
-
-	if (duree%5==0){
-				jeu.genereMonstre(jeu.getTerrain());
-		}
-
+      
 		if(!jeu.FinJeu(jeu.getPersonnage())) {
 			stop = true;
 		}
 
 	} while (!stop);
 	
-
-
 }
 
 int main(int argc, char** argv)
