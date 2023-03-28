@@ -19,6 +19,21 @@ Projectile::~Projectile() {
 
 }
 
+void Projectile::depDroite(const Terrain &t)
+{	
+	if (t.positionValide(p.getX(),p.getY()))
+	{
+		p.setX(p.getX() +1);
+	}
+}
+
+void Projectile::depAuto (const Terrain &t) {
+    if (t.positionValide(p.getX(),p.getY())) {
+        depDroite(t);
+    }
+
+}
+
 
 Vecteur Projectile::getpos() const {
 

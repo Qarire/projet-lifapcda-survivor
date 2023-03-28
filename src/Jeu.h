@@ -43,8 +43,10 @@ public:
     vector<Projectile> getVectorProjectile() const;
     /** @brief recupere le tableau dynamique de projectile*/
 
-    void degats_collision (const Terrain &map, Monstre &mob, Personnage &joueur,const Projectile &proj);
+    void degats_collision_mob(const Terrain &map, Monstre &mob, Personnage &joueur);
     /** @brief Procédure qui gère les degats infliger entre un différente entité **/
+
+    void degats_collision_proj(const Terrain &map, Monstre &mob, Projectile &proj);
 
     void genereMonstre(const Terrain &map);
     /** @brief Genere un monstre aleatoirement sur le terrain **/
@@ -62,9 +64,9 @@ public:
     void actionAutomatiques();
     /** @brief action automatique, notamment déplacement auto des monstres et tire projectile*/
     
-    void dessinBordures(const Terrain &map);
-     /** @brief Dessiner les bordures de la map */
+   
 };
 
 
 #endif
+

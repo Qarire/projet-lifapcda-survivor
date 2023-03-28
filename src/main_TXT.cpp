@@ -6,11 +6,13 @@
 #else
 #include <unistd.h>
 #endif // WIN32
-#include <ctime>
+
 #include "winTxt.h"
 #include <vector>
 #include "Jeu.h"
 
+#include<time.h>
+#include <ctime>
 
 using namespace std;
 
@@ -18,6 +20,7 @@ void txtAff(WinTXT & win, const Jeu & jeu) {
 	const Terrain &ter = jeu.getTerrain();
 	const Personnage &per = jeu.getPersonnage();
 	const vector<Monstre> &mon = jeu.getVectorMonstre();
+	const vector<Projectile> &proj= jeu.getVectorProjectile();
 	win.clear();
 	
 	//Affichage du Personnage
@@ -26,9 +29,19 @@ void txtAff(WinTXT & win, const Jeu & jeu) {
 	//Affichage des Monstres
 	for(unsigned int i=0;i<mon.size();i++)	
 	{
-		win.print(mon.at(i).getPos().getX(),mon.at(i).getPos().getY(),'M');
+		//if(mon.at(i).enVie())
+		//{
+			win.print(mon.at(i).getPos().getX(),mon.at(i).getPos().getY(),'M');
+		//}	
+		
 	}
-
+	
+	//Affichage des projectiles
+	for(unsigned int i=0;i<proj.size();i++)
+	{
+		win.print(proj.at(i).getpos().getX(),proj.at(i).getpos().getY(),'-');
+	}
+		//win.print(proj.at(proj.size()-1).getpos().getX(),proj.at(proj.size()-1).getpos().getY(),'-');
 	//Affichage du Terrain
 	for(unsigned int i=0;i<ter.getDimx();i++) // 1ere ligne horizontale
 	{
@@ -54,17 +67,35 @@ void txtBoucle (Jeu & jeu) {
 	WinTXT win (jeu.getTerrain().getDimx(),jeu.getTerrain().getDimy());
 
 	bool stop = false;
+	
+	srand(time(NULL));
+    clock_t debut = clock();
+    
+       
+      
 
 	do
 	{
 		txtAff(win,jeu);
+
 		 #ifdef _WIN32
         Sleep(100);
 		#else
 		usleep(100000);
         #endif // WIN32
-		jeu.genereMonstre(jeu.getTerrain());
+		
+		
+		clock_t fin = clock();
+      	int duree = (int)(fin - debut) / CLOCKS_PER_SEC;
+		if(duree%5 == 0) {
+         	//jeu.genereMonstre(jeu.getTerrain());
+			
+      	}
+		
 		jeu.actionAutomatiques();
+		
+		
+
 		int c = win.getCh();
 		switch (c) {
 				case 'z':
@@ -79,21 +110,30 @@ void txtBoucle (Jeu & jeu) {
 			case 's':
 				jeu.actionClavier('s');
 				break;
+			case 'o':
+				jeu.actionClavier('o');
+				break;
 			case 'b':
 				stop = true; 		//Touche b pour stoper le jeu
 				break;	
 		}
-      
+
 		if(!jeu.FinJeu(jeu.getPersonnage())) {
 			stop = true;
 		}
 
 	} while (!stop);
 	
+
+
 }
 
 int main(int argc, char** argv)
 {
+	
+	
+	
+	
 	termClear();
 	Jeu jeu;
 	txtBoucle(jeu);
@@ -101,4 +141,5 @@ int main(int argc, char** argv)
 
 	return 0;
 }
+
 

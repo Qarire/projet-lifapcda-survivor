@@ -1,21 +1,19 @@
 #include "Jeu.h"
-#include "Terrain.h"
-#include "Personnage.h"
-#include "Monstre.h"
-#include "Projectile.h"
-#include <vector>
+
+
 #include <ctime>
 #include <iostream>
 #include<stdlib.h>
 #include<time.h>
+#include<unistd.h>
 
 using namespace std;
 
 Jeu::Jeu() {
     map = Terrain(50,50);
     joueur = Personnage(Vecteur(25,25),100);
-    mob.push_back(Monstre());
-    proj.push_back(Projectile());
+    mob.push_back(Monstre(Vecteur(40,10),1));
+    proj.push_back(Projectile(joueur.getPos(),Vecteur()));
 }
 Jeu::~Jeu(){
 }
@@ -56,8 +54,8 @@ vector<Projectile> Jeu::getVectorProjectile() const
 }
 
 void Jeu::genereMonstre(const Terrain &map) {
-    //Création d'un monstre avec 50pv aleatoirement sur la map en fin de tableau*/
-    mob.push_back(Monstre(Vecteur(rand()%map.getDimx(),rand()%map.getDimy()),50));
+    //Création d'un monstre avec x pv aleatoirement sur la map en fin de tableau*/
+    mob.push_back(Monstre(Vecteur(rand()%map.getDimx(),rand()%map.getDimy()),1));
         
 
 }
@@ -68,19 +66,33 @@ void Jeu::genereProjectile(const Personnage &joueur){
 }
 
 
-void Jeu::degats_collision(const Terrain &map, Monstre &mob, Personnage &joueur,const Projectile &proj) {
+void Jeu::degats_collision_mob(const Terrain &map, Monstre &mob, Personnage &joueur) {
 
-    if(proj.getpos() == mob.getPos())
+    int new_pv_mob;
+    int new_pv_joueur;
+    
+    if(joueur.getPos() == mob.getPos())
     {
-        int new_pv_mob = mob.getPV() - 25; //prend 25 points de degats par projectile
+        new_pv_joueur = joueur.getPV() - 0; //prend x points de degats par mob
+        joueur.setPV(new_pv_joueur);
+        
+        new_pv_mob = mob.getPV() - 1 ;
         mob.setPV(new_pv_mob);
     }
 
-    if(joueur.getPos() == mob.getPos())
+
+}
+
+void Jeu::degats_collision_proj(const Terrain &map, Monstre &mob, Projectile &proj) {
+
+    int new_pv_mob;
+
+    if(proj.getpos() == mob.getPos())
     {
-        int new_pv_joueur = joueur.getPV() - 25; //prend 25 points de degats par projectile
-        joueur.setPV(new_pv_joueur);
+        new_pv_mob = mob.getPV() - 1; //prend x points de degats par projectile
+        mob.setPV(new_pv_mob);
     }
+
 }
 
 bool Jeu::FinJeu (const Personnage &joueur){
@@ -102,6 +114,11 @@ bool Jeu::actionClavier(const char touche) {
             break;
         
         case 's' : joueur.depBas(map);
+            break;
+
+        case 'o' :
+            genereProjectile(joueur);
+            break;
 
     }
 
@@ -110,9 +127,34 @@ bool Jeu::actionClavier(const char touche) {
 
 void Jeu::actionAutomatiques() {
     
-    for(unsigned int i=0;i<mob.size();i++)
-    {
-        mob.at(i).poursuitePerso(map,joueur);
-    }
+    
+    
 
+    vector<Monstre>::iterator it;
+    int i=0;
+    
+    for (auto it = mob.begin(); it != mob.end(); ++it)
+    {
+        
+        if(!mob.at(i).enVie())
+        {
+            mob.erase(it);
+        }
+        
+        mob.at(i).poursuitePerso(map,joueur);
+           
+        degats_collision_mob(map,mob.at(i),joueur);
+        
+        for(unsigned int y=0; y<proj.size(); y++) {
+            
+            proj.at(y).depAuto(map);
+            degats_collision_proj(map,mob.at(i),proj.at(y));
+        }
+
+        i++;
+    }
+    
+   
+    
+    
 }

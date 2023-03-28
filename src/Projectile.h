@@ -2,7 +2,7 @@
 #define _PROJECTILE_H
 
 #include "Vecteur.h"
-
+#include "Terrain.h"
 
 
 class Projectile {
@@ -24,6 +24,12 @@ class Projectile {
 		Vecteur getpos() const;
     	/** @brief recupere la position du projectile **/
     	
+		void depDroite (const Terrain &t);
+		/** @brief deplacement droite projectile*/
+
+		void depAuto (const Terrain &t);
+		/** @brief deplacement auto projectile*/
+		
     	Vecteur getvit() const;
     	/** @brief recupere la vitesse du projectile **/
 	
