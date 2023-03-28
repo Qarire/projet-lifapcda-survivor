@@ -26,7 +26,12 @@ class Projectile {
     	
 		void depDroite (const Terrain &t);
 		/** @brief deplacement droite projectile*/
-
+		void depGauche (const Terrain &t);
+		/** @brief deplacement droite projectile*/
+		void depHaut (const Terrain &t);
+		/** @brief deplacement droite projectile*/
+		void depBas (const Terrain &t);
+		/** @brief deplacement droite projectile*/
 		void depAuto (const Terrain &t);
 		/** @brief deplacement auto projectile*/
 		
