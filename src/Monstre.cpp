@@ -78,12 +78,71 @@ void Monstre::depBas(const Terrain &t)
 }
 
 void Monstre::poursuitePerso(const Terrain &t, const Personnage &p){
-    if (t.positionValide(m_pos.getX(),m_pos.getY())){
-        if (p.getPos().getX()>m_pos.getX()) depDroite(t);
-        if (p.getPos().getX()<m_pos.getX()) depGauche(t);
-        if (p.getPos().getY()>m_pos.getY()) depBas(t);
-        if (p.getPos().getY()<m_pos.getY()) depHaut(t);
-    }
-    
+    if (t.positionValide(m_pos.getX(),m_pos.getY()))
+	{
+		if ((p.getPos().getX()<m_pos.getX()) && (p.getPos().getY()<m_pos.getY()))
+		{
+			if ( t.getDistance( // On compare la distance entre  --- perso haut gauche, m bas droite
+				p.getPos().getX(),p.getPos().getY(),p.getPos().getX(), m_pos.getY() ) 
+					> t.getDistance(
+						m_pos.getX(),m_pos.getY(),p.getPos().getX(), m_pos.getY()  )
+				)
+			{
+				depHaut(t);
+			} else depGauche(t);
+		}
 
+		if ((p.getPos().getX()>m_pos.getX()) && (p.getPos().getY()>m_pos.getY()) )
+		{
+			if ( t.getDistance( // On compare la distance entre  ---> monstre haut gauche, perso bas droite
+					m_pos.getX(), m_pos.getY(),m_pos.getX(),p.getPos().getY() ) 
+						> t.getDistance(
+							p.getPos().getX(),p.getPos().getY(),m_pos.getX(),p.getPos().getY()  )
+					)
+				{
+					depBas(t);
+				} else depDroite(t);
+		}
+
+		if ( (p.getPos().getX()>m_pos.getX()) && (p.getPos().getY()<m_pos.getY()))
+		{
+			if ( t.getDistance( // On compare la distance entre  ---> monstre bas droite, perso haut gauche
+					 p.getPos().getX(),p.getPos().getY(),m_pos.getX(),p.getPos().getY() ) 
+						> t.getDistance(
+							 m_pos.getX(), m_pos.getY(),m_pos.getX(),p.getPos().getY()  )
+					)
+				{
+					depDroite(t);
+				} else depHaut(t);
+		}
+
+		if ((p.getPos().getX()<m_pos.getX()) && (p.getPos().getY()>m_pos.getY()))
+		{
+			if ( t.getDistance( // On compare la distance entre  ---> monstre haut droite, perso bas gauche
+					 p.getPos().getX(),p.getPos().getY(),m_pos.getX(),p.getPos().getY() ) 
+						> t.getDistance(
+							 m_pos.getX(), m_pos.getY(),m_pos.getX(),p.getPos().getY()  )
+					)
+				{
+					depGauche(t);
+				} else depBas(t);
+		}
+
+		// Monstre méme ligne ou colone que personnage 
+		if ((p.getPos().getX()==m_pos.getX()) && (p.getPos().getY()<m_pos.getY())) depHaut(t);
+		if ((p.getPos().getX()==m_pos.getX()) && (p.getPos().getY()>m_pos.getY())) depBas(t);
+		if ((p.getPos().getX()<m_pos.getX()) && (p.getPos().getY()==m_pos.getY())) depGauche(t);
+		if ((p.getPos().getX()>m_pos.getX()) && (p.getPos().getY()==m_pos.getY())) depDroite(t);
+		
+		// PERSO COORD : p.getPos().getX(),p.getPos().getY()
+		// MONSTRE COORD : m_pos.getX(), m_pos.getY()
+			
+		//	if (p.getPos().getX()>m_pos.getX()) depDroite(t);
+
+		//   if (p.getPos().getX()<m_pos.getX()) depGauche(t);
+
+		//    if (p.getPos().getY()>m_pos.getY()) depBas(t);
+
+		//    if (p.getPos().getY()<m_pos.getY()) depHaut(t);
+    }
 }
