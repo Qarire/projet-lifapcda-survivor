@@ -84,17 +84,13 @@ void txtBoucle (Jeu & jeu) {
 		usleep(100000);
         #endif // WIN32
 		
-		
-		clock_t fin = clock();
-      	int duree = (int)(fin - debut) / CLOCKS_PER_SEC;
-		if(duree%5 == 0) {
-         	//jeu.genereMonstre(jeu.getTerrain());
-			
-      	}
-		
 		jeu.actionAutomatiques();
-		
-		
+		clock_t fin = clock();
+      	int duree = (int)(fin - debut) / 10000;
+		if (duree>=1){
+			debut=fin;
+			jeu.genereMonstre(jeu.getTerrain());
+		}	
 
 		int c = win.getCh();
 		switch (c) {

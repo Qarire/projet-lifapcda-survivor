@@ -12,7 +12,7 @@ using namespace std;
 Jeu::Jeu() {
     map = Terrain(50,50);
     joueur = Personnage(Vecteur(25,25),100);
-    mob.push_back(Monstre(Vecteur(40,10),1));
+    mob.push_back(Monstre(Vecteur(45,25),1));
     proj.push_back(Projectile(joueur.getPos(),Vecteur()));
 }
 Jeu::~Jeu(){
@@ -73,7 +73,7 @@ void Jeu::degats_collision_mob(const Terrain &map, Monstre &mob, Personnage &jou
     
     if(joueur.getPos() == mob.getPos())
     {
-        new_pv_joueur = joueur.getPV() - 0; //prend x points de degats par mob
+        new_pv_joueur = joueur.getPV() - 5; //prend x points de degats par mob
         joueur.setPV(new_pv_joueur);
         
         new_pv_mob = mob.getPV() - 1 ;
