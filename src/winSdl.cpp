@@ -136,14 +136,14 @@ SDLSimple::SDLSimple () : jeu() {
     renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
 
      // IMAGES
-    im_personnage.loadFromFile("data/perso.svg",renderer);
-    im_monstre.loadFromFile("data/monstre.svg", renderer);
+    im_personnage.loadFromFile("data/wizard_.png",renderer);
+    im_monstre.loadFromFile("data/monstre.png", renderer);
     im_terrain.loadFromFile("data/Black_blocs.jpg", renderer);
     im_projectile.loadFromFile("data/projectile.png", renderer);
    
 
   // FONTS
-     font = TTF_OpenFont("data/contrast.ttf", 72);
+     font = TTF_OpenFont("data/leadcoat.ttf", 72);
     if (font == nullptr)
         font = TTF_OpenFont("../data/contrast.ttf",72);
     if (font == nullptr) {
@@ -188,10 +188,13 @@ void SDLSimple::sdlAff () {
     SDL_SetRenderDrawColor(renderer, 255,255, 255, 255);
      SDL_RenderClear(renderer);
     font_color.r = 0;font_color.g = 0;font_color.b = 0;
-	//font_im.setSurface(TTF_RenderText_Solid(font,"** Survivor **",font_color));
-	//font_im.loadFromCurrentSurface(renderer);
+    int pv=per.getPV();
+    char pv_string[50];
+    sprintf(pv_string, " pv : %d",pv);
+	font_im.setSurface(TTF_RenderText_Solid(font,pv_string,font_color));
+	font_im.loadFromCurrentSurface(renderer);
     SDL_Rect positionTitre;
-    positionTitre.x = 150;positionTitre.y = 100;positionTitre.w =200;positionTitre.h = 72;
+    positionTitre.x = 50;positionTitre.y = 50;positionTitre.w =200;positionTitre.h = 72;
     SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionTitre);
     //Dessin Personnage
     im_personnage.draw(renderer, per.getPos().getX(), per.getPos().getY(), 100 ,100);
@@ -246,18 +249,19 @@ void SDLSimple::sdlBoucle () {
 	while (!quit) {
 
         nt = SDL_GetTicks();
-        if (nt-t>500) {
-            
+        if (nt-t>1) {
+            jeu.actionAutomatiques();
             t = nt;
         }
-        jeu.actionAutomatiques();
+        
         clock_t fin = clock();
       	int duree = (int)(fin - debut) / CLOCKS_PER_SEC;
 		if (duree>=1){
 			debut=fin;
-			//jeu.genereMonstre(jeu.getTerrain());
+			jeu.genereMonstre(jeu.getTerrain());
 		}	
-    
+        cout <<"debut= "<<debut<<endl;
+        cout <<"fin= "<<fin<<endl;
 		// tant qu'il y a des évenements à traiter (cette boucle n'est pas bloquante)
 		while (SDL_PollEvent(&events)) {
 			if (events.type == SDL_QUIT) quit = true;           // Si l'utilisateur a clique sur la croix de fermeture
