@@ -120,14 +120,13 @@ SDLSimple::SDLSimple () : jeu() {
     }
     else withSound = true;
 
-	int dimx, dimy;
-	//dimx = jeu.getTerrain().getDimx();
-	//dimy = jeu.getTerrain().getDimy();
+	int dimx = jeu.getTerrain().getDimx();
+	int dimy = jeu.getTerrain().getDimy();
     cout<<" Taille fenetre en x --> "<<jeu.getTerrain().getDimx()<<endl;
     cout<<" Taille fenetre en y --> "<<jeu.getTerrain().getDimy()<<endl;
 
     // Creation de la fenetre
-    window = SDL_CreateWindow("Survivor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 500, 500, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+    window = SDL_CreateWindow("Survivor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, dimx, dimy, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (window == nullptr) {
         cout << "Erreur lors de la creation de la fenetre : " << SDL_GetError() << endl; 
         SDL_Quit(); 
@@ -199,7 +198,7 @@ void SDLSimple::sdlAff () {
     //Dessin des Monstres
     for(unsigned int i=0;i<mon.size();i++)
     {
-        im_monstre.draw(renderer, mon.at(i).getPos().getX(),mon.at(i).getPos().getX(),100,100);
+        im_monstre.draw(renderer, mon.at(i).getPos().getX(),mon.at(i).getPos().getY(),100,100);
     }
 
     //Dessin du terrain
@@ -238,15 +237,15 @@ void SDLSimple::sdlBoucle () {
 
         nt = SDL_GetTicks();
         if (nt-t>500) {
-            jeu.actionAutomatiques();
+            
             t = nt;
         }
-
+        jeu.actionAutomatiques();
         clock_t fin = clock();
-      	int duree = (int)(fin - debut) / 10000;
-		if (duree>=2){
+      	int duree = (int)(fin - debut) / CLOCKS_PER_SEC;
+		if (duree>=1){
 			debut=fin;
-			//jeu.genereMonstre(jeu.getTerrain());
+			jeu.genereMonstre(jeu.getTerrain());
 		}	
 
 
