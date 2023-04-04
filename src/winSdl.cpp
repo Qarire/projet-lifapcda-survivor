@@ -4,11 +4,14 @@
 #include "winSdl.h"
 #include<unistd.h>
 #include <iostream>
+
+#include<time.h>
+#include <ctime>
+
 using namespace std;
 
-float temps () {
-    return float(SDL_GetTicks()) / CLOCKS_PER_SEC;  // conversion des ms en secondes en divisant par 1000
-}
+
+
 
 // ============= CLASS IMAGE =============== //
 
@@ -136,7 +139,8 @@ SDLSimple::SDLSimple () : jeu() {
      // IMAGES
     im_personnage.loadFromFile("data/perso.svg",renderer);
     im_monstre.loadFromFile("data/monstre.svg", renderer);
-    im_pacman.loadFromFile("data/pacman.png",renderer);
+    im_terrain.loadFromFile("data/Black_blocs.jpg", renderer);
+   
 
   // FONTS
      font = TTF_OpenFont("data/contrast.ttf", 72);
@@ -174,15 +178,50 @@ SDLSimple::~SDLSimple () {
 
 void SDLSimple::sdlAff () {
 	//Remplir l'écran de blanc
+    const Terrain& ter = jeu.getTerrain();
+    const Personnage& per = jeu.getPersonnage();
+    const vector<Monstre> &mon = jeu.getVectorMonstre();
+	const vector<Projectile> &proj= jeu.getVectorProjectile();
+    
+
+
     SDL_SetRenderDrawColor(renderer, 255,255, 255, 255);
      SDL_RenderClear(renderer);
     font_color.r = 0;font_color.g = 0;font_color.b = 0;
-	font_im.setSurface(TTF_RenderText_Solid(font,"** Survivor **",font_color));
-	font_im.loadFromCurrentSurface(renderer);
+	//font_im.setSurface(TTF_RenderText_Solid(font,"** Survivor **",font_color));
+	//font_im.loadFromCurrentSurface(renderer);
     SDL_Rect positionTitre;
     positionTitre.x = 150;positionTitre.y = 100;positionTitre.w =200;positionTitre.h = 72;
     SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionTitre);
-    im_monstre.draw(renderer, 200, 250, 100, 100);
+    //Dessin Personnage
+    im_personnage.draw(renderer, per.getPos().getX(), per.getPos().getY(), 100 ,100);
+    
+    //Dessin des Monstres
+    for(unsigned int i=0;i<mon.size();i++)
+    {
+        im_monstre.draw(renderer, mon.at(i).getPos().getX(),mon.at(i).getPos().getX(),100,100);
+    }
+
+    //Dessin du terrain
+    for(unsigned int i=0;i<ter.getDimx();i++) // 1ere ligne horizontale
+	{
+		im_terrain.draw(renderer,i,0,40,40);
+	}
+
+	for(unsigned int j=0;j<ter.getDimy();j++) //Les 2 lignes verticales
+	{
+		//win.print(0,j,'*');
+        im_terrain.draw(renderer,0,j,40,40);
+
+		//win.print(ter.getDimx()-1,j,'*');
+        im_terrain.draw(renderer,ter.getDimx()-1,j,40,40);
+	}
+
+	for(unsigned int i=0;i<ter.getDimx();i++) // 2e ligne horizontale
+	{
+        im_terrain.draw(renderer,i,ter.getDimy()-1,40,40);
+	}
+
 }
 
 void SDLSimple::sdlBoucle () {
@@ -191,14 +230,25 @@ void SDLSimple::sdlBoucle () {
 
     Uint32 t = SDL_GetTicks(), nt;
 
+    srand(time(NULL));
+    clock_t debut = clock();
+
 	// tant que ce n'est pas la fin ...
 	while (!quit) {
 
         nt = SDL_GetTicks();
         if (nt-t>500) {
-            //jeu.actionAutomatiques();
+            jeu.actionAutomatiques();
             t = nt;
         }
+
+        clock_t fin = clock();
+      	int duree = (int)(fin - debut) / 10000;
+		if (duree>=2){
+			debut=fin;
+			//jeu.genereMonstre(jeu.getTerrain());
+		}	
+
 
 		// tant qu'il y a des évenements à traiter (cette boucle n'est pas bloquante)
 		while (SDL_PollEvent(&events)) {

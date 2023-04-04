@@ -39,7 +39,7 @@ void txtAff(WinTXT & win, const Jeu & jeu) {
 	//Affichage des projectiles
 	for(unsigned int i=0;i<proj.size();i++)
 	{
-		win.print(proj.at(i).getpos().getX(),proj.at(i).getpos().getY(),'-');
+		win.print(proj.at(i).getpos().getX(),proj.at(i).getpos().getY(),'.');
 	}
 		//win.print(proj.at(proj.size()-1).getpos().getX(),proj.at(proj.size()-1).getpos().getY(),'-');
 	//Affichage du Terrain
@@ -85,6 +85,7 @@ void txtBoucle (Jeu & jeu) {
         #endif // WIN32
 		
 		jeu.actionAutomatiques();
+		
 		clock_t fin = clock();
       	int duree = (int)(fin - debut) / 10000;
 		if (duree>=1){
