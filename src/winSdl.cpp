@@ -139,6 +139,7 @@ SDLSimple::SDLSimple () : jeu() {
     im_personnage.loadFromFile("data/perso.svg",renderer);
     im_monstre.loadFromFile("data/monstre.svg", renderer);
     im_terrain.loadFromFile("data/Black_blocs.jpg", renderer);
+    im_projectile.loadFromFile("data/projectile.png", renderer);
    
 
   // FONTS
@@ -221,6 +222,14 @@ void SDLSimple::sdlAff () {
         im_terrain.draw(renderer,i,ter.getDimy()-1,40,40);
 	}
 
+    //Dessin projectile
+
+    for(unsigned int i=0;i<proj.size();i++)
+	{
+		//win.print(proj.at(i).getpos().getX(),proj.at(i).getpos().getY(),'.');
+        im_projectile.draw(renderer,proj.at(i).getpos().getX(),proj.at(i).getpos().getY(),20,20);
+	}
+
 }
 
 void SDLSimple::sdlBoucle () {
@@ -231,6 +240,7 @@ void SDLSimple::sdlBoucle () {
 
     srand(time(NULL));
     clock_t debut = clock();
+
 
 	// tant que ce n'est pas la fin ...
 	while (!quit) {
@@ -245,10 +255,9 @@ void SDLSimple::sdlBoucle () {
       	int duree = (int)(fin - debut) / CLOCKS_PER_SEC;
 		if (duree>=1){
 			debut=fin;
-			jeu.genereMonstre(jeu.getTerrain());
+			//jeu.genereMonstre(jeu.getTerrain());
 		}	
-
-
+    
 		// tant qu'il y a des évenements à traiter (cette boucle n'est pas bloquante)
 		while (SDL_PollEvent(&events)) {
 			if (events.type == SDL_QUIT) quit = true;           // Si l'utilisateur a clique sur la croix de fermeture
@@ -267,8 +276,12 @@ void SDLSimple::sdlBoucle () {
 				case SDL_SCANCODE_RIGHT:
 					jeu.actionClavier('d');
 					break;
+                case SDL_SCANCODE_O:
+                    jeu.actionClavier('o');
+                    break;
+                
                 case SDL_SCANCODE_ESCAPE:
-                case SDL_SCANCODE_Q:
+
                     quit = true;
                     break;
 				default: break;

@@ -10,7 +10,7 @@
 using namespace std;
 
 Jeu::Jeu() {
-    map = Terrain(1900,1024);
+    map = Terrain(1800,824);
     joueur = Personnage(Vecteur(950,512),100);
     mob.push_back(Monstre(Vecteur(45,25),1));
     proj.push_back(Projectile(joueur.getPos(),Vecteur()));
