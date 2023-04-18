@@ -4,7 +4,6 @@
 #include "winSdl.h"
 #include<unistd.h>
 #include <iostream>
-
 #include<time.h>
 #include <ctime>
 
@@ -122,8 +121,6 @@ SDLSimple::SDLSimple () : jeu() {
 
 	int dimx = jeu.getTerrain().getDimx();
 	int dimy = jeu.getTerrain().getDimy();
-    cout<<" Taille fenetre en x --> "<<jeu.getTerrain().getDimx()<<endl;
-    cout<<" Taille fenetre en y --> "<<jeu.getTerrain().getDimy()<<endl;
 
     // Creation de la fenetre
     window = SDL_CreateWindow("Survivor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, dimx, dimy, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
@@ -137,9 +134,11 @@ SDLSimple::SDLSimple () : jeu() {
 
      // IMAGES
     im_personnage.loadFromFile("data/wizard_.png",renderer);
-    im_monstre.loadFromFile("data/monstre.png", renderer);
+    im_monstre.loadFromFile("data/ghost.png", renderer);
     im_terrain.loadFromFile("data/Black_blocs.jpg", renderer);
     im_projectile.loadFromFile("data/projectile.png", renderer);
+    //im_remplirTerrain.loadFromFile("data/grey.webp", renderer);
+    im_remplirTerrain.loadFromFile("data/3.webp", renderer);
    
 
   // FONTS
@@ -177,14 +176,13 @@ SDLSimple::~SDLSimple () {
 }
 
 void SDLSimple::sdlAff () {
-	//Remplir l'écran de blanc
+
     const Terrain& ter = jeu.getTerrain();
     const Personnage& per = jeu.getPersonnage();
     const vector<Monstre> &mon = jeu.getVectorMonstre();
 	const vector<Projectile> &proj= jeu.getVectorProjectile();
     
-
-
+	//Remplir l'écran de blanc
     SDL_SetRenderDrawColor(renderer, 255,255, 255, 255);
      SDL_RenderClear(renderer);
     font_color.r = 0;font_color.g = 0;font_color.b = 0;
@@ -194,35 +192,45 @@ void SDLSimple::sdlAff () {
 	font_im.setSurface(TTF_RenderText_Solid(font,pv_string,font_color));
 	font_im.loadFromCurrentSurface(renderer);
     SDL_Rect positionTitre;
-    positionTitre.x = 50;positionTitre.y = 50;positionTitre.w =200;positionTitre.h = 72;
+    positionTitre.x = 1750;positionTitre.y = 20;positionTitre.w =100;positionTitre.h = 20;
     SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionTitre);
+
+    //Dessiner l'arrière plan
+
+     for(unsigned int x=0; x<jeu.getTerrain().getDimx(); x+=626) {
+        for(unsigned int y=0; y<jeu.getTerrain().getDimy(); y+=543) 
+        {
+            im_remplirTerrain.draw(renderer, x,y, 626,543);
+        }
+    }
+
     //Dessin Personnage
-    im_personnage.draw(renderer, per.getPos().getX(), per.getPos().getY(), 100 ,100);
+    im_personnage.draw(renderer, per.getPos().getX()-25, per.getPos().getY()-25, 50 ,50);
     
     //Dessin des Monstres
     for(unsigned int i=0;i<mon.size();i++)
     {
-        im_monstre.draw(renderer, mon.at(i).getPos().getX(),mon.at(i).getPos().getY(),100,100);
+        im_monstre.draw(renderer, mon.at(i).getPos().getX()-12,mon.at(i).getPos().getY()-12,24,24);
     }
 
     //Dessin du terrain
     for(unsigned int i=0;i<ter.getDimx();i++) // 1ere ligne horizontale
 	{
-		im_terrain.draw(renderer,i,0,40,40);
+		im_terrain.draw(renderer,i,0,10,10);
 	}
 
 	for(unsigned int j=0;j<ter.getDimy();j++) //Les 2 lignes verticales
 	{
 		//win.print(0,j,'*');
-        im_terrain.draw(renderer,0,j,40,40);
+        im_terrain.draw(renderer,0,j,10,10);
 
 		//win.print(ter.getDimx()-1,j,'*');
-        im_terrain.draw(renderer,ter.getDimx()-1,j,40,40);
+        im_terrain.draw(renderer,ter.getDimx()-1,j,10,10);
 	}
 
 	for(unsigned int i=0;i<ter.getDimx();i++) // 2e ligne horizontale
 	{
-        im_terrain.draw(renderer,i,ter.getDimy()-1,40,40);
+        im_terrain.draw(renderer,i,ter.getDimy()-1,10,10);
 	}
 
     //Dessin projectile
@@ -230,7 +238,7 @@ void SDLSimple::sdlAff () {
     for(unsigned int i=0;i<proj.size();i++)
 	{
 		//win.print(proj.at(i).getpos().getX(),proj.at(i).getpos().getY(),'.');
-        im_projectile.draw(renderer,proj.at(i).getpos().getX(),proj.at(i).getpos().getY(),20,20);
+        im_projectile.draw(renderer,proj.at(i).getpos().getX(),proj.at(i).getpos().getY(),10,10);
 	}
 
 }
@@ -243,30 +251,36 @@ void SDLSimple::sdlBoucle () {
 
     srand(time(NULL));
     clock_t debut = clock();
-
-
+    clock_t debut2 = clock();
 	// tant que ce n'est pas la fin ...
 	while (!quit) {
 
         nt = SDL_GetTicks();
         if (nt-t>1) {
-            jeu.actionAutomatiques();
+            //jeu.actionAutomatiques();
             t = nt;
         }
-        
+
+        jeu.actionAutomatiques();
+        jeu.verifierLimitesJoueur(jeu.getTerrain()); // Verifier la position du personnage pour le placer dans l'écran
         clock_t fin = clock();
+        clock_t fin2 = clock();
       	int duree = (int)(fin - debut) / CLOCKS_PER_SEC;
-		if (duree>=1){
+        int duree2 = (int)(fin2 - debut2) / CLOCKS_PER_SEC;
+
+		if (duree>=1){ // On ajout un monstre chaque seconde
 			debut=fin;
 			jeu.genereMonstre(jeu.getTerrain());
 		}	
-        cout <<"debut= "<<debut<<endl;
-        cout <<"fin= "<<fin<<endl;
+        if (duree2>=3){ // On ajoute un projectil chage 5 secondes
+			debut2=fin2;
+            jeu.genereProjectile(jeu.getPersonnage());
+		}
+
 		// tant qu'il y a des évenements à traiter (cette boucle n'est pas bloquante)
 		while (SDL_PollEvent(&events)) {
 			if (events.type == SDL_QUIT) quit = true;           // Si l'utilisateur a clique sur la croix de fermeture
 			else if (events.type == SDL_KEYDOWN) {              // Si une touche est enfoncee
-                //bool mangePastille = false;
 				switch (events.key.keysym.scancode) {
 				case SDL_SCANCODE_UP:
 					jeu.actionClavier('z');    
@@ -280,7 +294,7 @@ void SDLSimple::sdlBoucle () {
 				case SDL_SCANCODE_RIGHT:
 					jeu.actionClavier('d');
 					break;
-                case SDL_SCANCODE_O:
+                case SDL_SCANCODE_SPACE:
                     jeu.actionClavier('o');
                     break;
                 

@@ -146,3 +146,23 @@ void Monstre::poursuitePerso(const Terrain &t, const Personnage &p){
 		//    if (p.getPos().getY()<m_pos.getY()) depHaut(t);
     }
 }
+
+void Monstre::deplacementNaturel(const Terrain &t) {
+    // définition des vecteurs de direction possibles
+    vector<Vecteur> directions = { {1,0}, {-1,0}, {0,1}, {0,-1}, {1,1}, {-1,-1}, {1,-1}, {-1,1} };
+    int n_directions = directions.size();
+
+    // choix aléatoire d'une direction parmi celles possibles
+    int random_dir = rand() % n_directions;
+    Vecteur deplacement = directions[random_dir];
+
+    // calcul des coordonnées de la nouvelle position
+    int new_x = m_pos.getX() + deplacement.getX();
+    int new_y = m_pos.getY() + deplacement.getY();
+
+    // vérification si la nouvelle position est valide
+    if (t.positionValide(new_x, new_y)) {
+        m_pos.setX(new_x);
+        m_pos.setY(new_y);
+    }
+}

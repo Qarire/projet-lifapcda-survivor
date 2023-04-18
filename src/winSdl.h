@@ -52,6 +52,7 @@ private :
     Image im_terrain;
     Image im_monstre;
     Image im_projectile;
+    Image im_remplirTerrain;
     
 
 

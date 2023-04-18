@@ -9,13 +9,14 @@ class Projectile {
     private :
 	
 	Vecteur p,v;
+	int p_pv;
 
     public:
 
 		Projectile();
 		/** @brief Constructeur par défaut du projectile **/
 
-		Projectile(Vecteur pos, Vecteur vit);
+		Projectile(Vecteur pos, Vecteur vit, int hp);
 		/** @brief Constructeur */
 
 		~Projectile();
@@ -38,6 +39,16 @@ class Projectile {
     	Vecteur getvit() const;
     	/** @brief recupere la vitesse du projectile **/
 	
+		void ProjectilePoursuiteMonstre(const Vecteur& arrivee, const Terrain &t);
+
+		bool enVie() const;
+
+		/** @brief accesseur pour récuperer les points de vie d'un monstre
+     	**/
+	int getPV() const;
+	
+	/** @brief Mutateur pour modifier les points de vie d'un monstre*/
+	void setPV(int hp);
 	
 };
 

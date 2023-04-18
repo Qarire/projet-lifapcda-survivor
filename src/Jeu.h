@@ -64,7 +64,10 @@ public:
     void actionAutomatiques();
     /** @brief action automatique, notamment déplacement auto des monstres et tire projectile*/
     
-   
+    Vecteur tirerProjectile(const Personnage &p,const Terrain &t,
+         Monstre &mob, Projectile &proj );
+
+    void verifierLimitesJoueur(const Terrain &map);
 };
 
 

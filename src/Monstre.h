@@ -5,7 +5,7 @@
 #include"Terrain.h"
 #include"Vecteur.h"
 #include"Personnage.h"
-
+#include <vector>
 using namespace std;
 
 
@@ -67,6 +67,8 @@ class Monstre
 	/**
      	@brief procédure qui permet au monstre de suivre le pernonnage
     **/	 
+
+   void deplacementNaturel(const Terrain &t);
 };
 
 #endif

@@ -9,14 +9,28 @@ Projectile::Projectile() {
     v = Vecteur();      
 }
 
-Projectile::Projectile(Vecteur pos, Vecteur vit){
+Projectile::Projectile(Vecteur pos, Vecteur vit, int hp){
     p = pos;                // Notamment le Vecteur pos du Personnage
-    v = vit;                
+    v = vit;  
+    p_pv = hp;              
 }
 
 
 Projectile::~Projectile() {
 
+}
+
+int Projectile::getPV() const {
+    return p_pv;
+}
+
+void Projectile::setPV(int hp){
+    p_pv=hp;
+}
+
+bool Projectile::enVie() const{
+    
+    return (p_pv!=0) ;
 }
 
 void Projectile::depDroite(const Terrain &t)
@@ -69,6 +83,20 @@ Vecteur Projectile::getvit() const {
 }
 
 
+//++
+void Projectile::ProjectilePoursuiteMonstre(const Vecteur& arrivee, const Terrain &t)
+{
+    if (p.getX() != arrivee.getX() || p.getY() != arrivee.getY()) {
+        if (p.getX() > arrivee.getX()) {
+            depGauche(t);
+        } else if (p.getX() < arrivee.getX()) {
+            depDroite(t);
+        }
+        if (p.getY() > arrivee.getY()) {
+            depHaut(t);
+        } else if (p.getY() < arrivee.getY()) {
+            depBas(t);
+        }
+    }
+}
 
-
-    

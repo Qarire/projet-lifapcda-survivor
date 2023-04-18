@@ -28,7 +28,7 @@ void Personnage::depGauche(const Terrain &t)
 {	
 	if (t.positionValide(pos.getX(),pos.getY()))
 	{
-		pos.setX(pos.getX() -1.0);
+		pos.setX(pos.getX() -10.1);
 		if (pos.getX()<=0) {
 			pos.setX(0);
 		}
@@ -40,7 +40,7 @@ void Personnage::depDroite(const Terrain &t)
 {	
 	if (t.positionValide(pos.getX(),pos.getY()))
 	{
-		pos.setX(pos.getX() +1.0);
+		pos.setX(pos.getX() +10.1);
 		if (pos.getX()>=t.getDimx()) {
 			pos.setX(t.getDimx());
 		}
@@ -52,7 +52,7 @@ void Personnage::depHaut(const Terrain &t)
 {
 	if (t.positionValide(pos.getX(),pos.getY()))
 	{
-		pos.setY(pos.getY() -1.0);
+		pos.setY(pos.getY() -10.1);
 		if (pos.getY()<=0) {
 			pos.setY(0);
 		}
@@ -64,7 +64,7 @@ void Personnage::depBas(const Terrain &t)
 {
 	if (t.positionValide(pos.getX(),pos.getY()))
 	{
-		pos.setY(pos.getY() +1.0);
+		pos.setY(pos.getY() +10.1);
 		if (pos.getY()>=t.getDimy()) {
 			pos.setY(t.getDimy());
 		}
