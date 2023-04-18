@@ -37,21 +37,21 @@ void Projectile::depDroite(const Terrain &t)
 {	
 	if (t.positionValide(p.getX(),p.getY()))
 	{
-		p.setX(p.getX() +1);
+		p.setX(p.getX() + PR_DIST);
 	}
 }
 void Projectile::depGauche(const Terrain &t)
 {	
 	if (t.positionValide(p.getX(),p.getY()))
 	{
-		p.setX(p.getX() -1);
+		p.setX(p.getX() - PR_DIST);
 	}
 }
 void Projectile::depHaut(const Terrain &t)
 {	
 	if (t.positionValide(p.getX(),p.getY()))
 	{
-		p.setY(p.getY() -1);
+		p.setY(p.getY() - PR_DIST);
 	}
 }
 
@@ -59,7 +59,7 @@ void Projectile::depBas(const Terrain &t)
 {	
 	if (t.positionValide(p.getX(),p.getY()))
 	{
-		p.setY(p.getY() +1);
+		p.setY(p.getY() + PR_DIST);
 	}
 }
 

@@ -1,6 +1,6 @@
 #ifndef _PROJECTILE_H
 #define _PROJECTILE_H
-
+#define PR_DIST 5
 #include "Vecteur.h"
 #include "Terrain.h"
 

@@ -185,15 +185,6 @@ void SDLSimple::sdlAff () {
 	//Remplir l'écran de blanc
     SDL_SetRenderDrawColor(renderer, 255,255, 255, 255);
      SDL_RenderClear(renderer);
-    font_color.r = 0;font_color.g = 0;font_color.b = 0;
-    int pv=per.getPV();
-    char pv_string[50];
-    sprintf(pv_string, " pv : %d",pv);
-	font_im.setSurface(TTF_RenderText_Solid(font,pv_string,font_color));
-	font_im.loadFromCurrentSurface(renderer);
-    SDL_Rect positionTitre;
-    positionTitre.x = 1750;positionTitre.y = 20;positionTitre.w =100;positionTitre.h = 20;
-    SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionTitre);
 
     //Dessiner l'arrière plan
 
@@ -212,7 +203,16 @@ void SDLSimple::sdlAff () {
     {
         im_monstre.draw(renderer, mon.at(i).getPos().getX()-12,mon.at(i).getPos().getY()-12,24,24);
     }
-
+    //affichage des PV
+    font_color.r = 0;font_color.g = 0;font_color.b = 0;
+    int pv=per.getPV();
+    char pv_string[50];
+    sprintf(pv_string, " pv : %d",pv);
+	font_im.setSurface(TTF_RenderText_Solid(font,pv_string,font_color));
+	font_im.loadFromCurrentSurface(renderer);
+    SDL_Rect positionTitre;
+    positionTitre.x = 1750;positionTitre.y = 20;positionTitre.w =100;positionTitre.h = 20;
+    SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionTitre);
     //Dessin du terrain
     for(unsigned int i=0;i<ter.getDimx();i++) // 1ere ligne horizontale
 	{
@@ -248,32 +248,34 @@ void SDLSimple::sdlBoucle () {
 	bool quit = false;
 
     Uint32 t = SDL_GetTicks(), nt;
+    Uint32 t_auto, t_monstre, t_projectile;
+    t_auto = t_monstre = t_projectile = t;
 
     srand(time(NULL));
-    clock_t debut = clock();
-    clock_t debut2 = clock();
+   /** clock_t debut = clock();
+    clock_t debut2 = clock();*/
 	// tant que ce n'est pas la fin ...
 	while (!quit) {
 
         nt = SDL_GetTicks();
-        if (nt-t>1) {
-            //jeu.actionAutomatiques();
-            t = nt;
+        if (nt-t_auto>40) {
+            jeu.actionAutomatiques();
+            t_auto = nt;
         }
 
-        jeu.actionAutomatiques();
+        //jeu.actionAutomatiques();
         jeu.verifierLimitesJoueur(jeu.getTerrain()); // Verifier la position du personnage pour le placer dans l'écran
-        clock_t fin = clock();
+      /**  clock_t fin = clock();
         clock_t fin2 = clock();
       	int duree = (int)(fin - debut) / CLOCKS_PER_SEC;
-        int duree2 = (int)(fin2 - debut2) / CLOCKS_PER_SEC;
-
-		if (duree>=1){ // On ajout un monstre chaque seconde
-			debut=fin;
+        int duree2 = (int)(fin2 - debut2) / CLOCKS_PER_SEC; */
+        
+		if (nt-t_monstre>=1000){ // On ajout un monstre chaque seconde
+			t_monstre=nt;
 			jeu.genereMonstre(jeu.getTerrain());
 		}	
-        if (duree2>=3){ // On ajoute un projectil chage 5 secondes
-			debut2=fin2;
+        if (nt-t_projectile>=3000){ // On ajoute un projectile chaque 3 secondes
+			t_projectile=nt;
             jeu.genereProjectile(jeu.getPersonnage());
 		}
 

@@ -11,8 +11,8 @@ using namespace std;
 
 Jeu::Jeu()
 {
-   /* map = Terrain(500.1, 500.1); */ map = Terrain(10000, 10000); // map = Terrain(1900, 950);
-    /*joueur = Personnage(Vecteur(250, 250), 100);*/joueur = Personnage(Vecteur(10000/2, 10000/2), 100);// joueur = Personnage(Vecteur(950, 475), 100);
+   map = Terrain(1900, 950); /* map = Terrain(500.1, 500.1); */ // map = Terrain(10000, 10000);
+    /*joueur = Personnage(Vecteur(250, 250), 100);*/joueur = Personnage(Vecteur(1900/2, 950/2), 100);// joueur = Personnage(Vecteur(950, 475), 100);
     mob.push_back(Monstre(Vecteur(200, 205), 1));
     proj.push_back(Projectile(joueur.getPos(), Vecteur(), 1));
 }
@@ -265,7 +265,7 @@ void Jeu::actionAutomatiques()
                 }
 
                 double distance = map.getDistance(it_m->getPos().getX(), it_m->getPos().getY(), it_p->getpos().getX(), it_p->getpos().getY());
-                if (distance < distance_min && map.getDistance(joueur.getPos().getX(), joueur.getPos().getY(), it_m->getPos().getX(), it_m->getPos().getY()) <=300 )
+                if (distance < distance_min /*&& map.getDistance(joueur.getPos().getX(), joueur.getPos().getY(), it_m->getPos().getX(), it_m->getPos().getY()) <=300 */)
                 {
                     distance_min = distance;
                     index_proj_proche = std::distance(proj.begin(), it_p);

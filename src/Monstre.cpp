@@ -50,21 +50,21 @@ void Monstre::depGauche(const Terrain &t)
 {	
 	if (t.positionValide(m_pos.getX(),m_pos.getY()))
 	{
-		m_pos.setX(m_pos.getX() -0.5);
+		m_pos.setX(m_pos.getX() - DIST);
 	}
 }
 void Monstre::depDroite(const Terrain &t)
 {	
 	if (t.positionValide(m_pos.getX(),m_pos.getY()))
 	{
-		m_pos.setX(m_pos.getX() +0.5);
+		m_pos.setX(m_pos.getX() + DIST);
 	}
 }
 void Monstre::depHaut(const Terrain &t){
 {
 	if (t.positionValide(m_pos.getX(),m_pos.getY()))
 	{
-		m_pos.setY(m_pos.getY() -0.5);
+		m_pos.setY(m_pos.getY() - DIST);
 	}
 }
 }
@@ -73,7 +73,7 @@ void Monstre::depBas(const Terrain &t)
 {
     if (t.positionValide(m_pos.getX(),m_pos.getY()))
 	{
-		m_pos.setY(m_pos.getY() +0.5);
+		m_pos.setY(m_pos.getY() + DIST);
 	}
 }
 

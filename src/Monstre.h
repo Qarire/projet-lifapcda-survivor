@@ -6,6 +6,7 @@
 #include"Vecteur.h"
 #include"Personnage.h"
 #include <vector>
+#define DIST 3
 using namespace std;
 
 
