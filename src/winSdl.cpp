@@ -9,9 +9,6 @@
 
 using namespace std;
 
-
-
-
 // ============= CLASS IMAGE =============== //
 
 Image::Image () : m_surface(nullptr), m_texture(nullptr), m_hasChanged(false) {
@@ -137,7 +134,6 @@ SDLSimple::SDLSimple () : jeu() {
     im_monstre.loadFromFile("data/ghost.png", renderer);
     im_terrain.loadFromFile("data/Black_blocs.jpg", renderer);
     im_projectile.loadFromFile("data/projectile.png", renderer);
-    //im_remplirTerrain.loadFromFile("data/grey.webp", renderer);
     im_remplirTerrain.loadFromFile("data/3.webp", renderer);
    
 
@@ -182,8 +178,7 @@ void SDLSimple::sdlAff () {
     const vector<Monstre> &mon = jeu.getVectorMonstre();
 	const vector<Projectile> &proj= jeu.getVectorProjectile();
     
-	//Remplir l'écran de blanc
-    SDL_SetRenderDrawColor(renderer, 255,255, 255, 255);
+	SDL_SetRenderDrawColor(renderer, 255,255, 255, 255);
      SDL_RenderClear(renderer);
 
     //Dessiner l'arrière plan
@@ -203,16 +198,18 @@ void SDLSimple::sdlAff () {
     {
         im_monstre.draw(renderer, mon.at(i).getPos().getX()-12,mon.at(i).getPos().getY()-12,24,24);
     }
-    //affichage des PV
+
+    // Affichage des PV
     font_color.r = 0;font_color.g = 0;font_color.b = 0;
     int pv=per.getPV();
     char pv_string[50];
-    sprintf(pv_string, " pv : %d",pv);
+    sprintf(pv_string, " L i f e : %d",pv);
 	font_im.setSurface(TTF_RenderText_Solid(font,pv_string,font_color));
 	font_im.loadFromCurrentSurface(renderer);
     SDL_Rect positionTitre;
-    positionTitre.x = 1750;positionTitre.y = 20;positionTitre.w =100;positionTitre.h = 20;
+    positionTitre.x = 20;positionTitre.y = 20;positionTitre.w =200;positionTitre.h = 50;
     SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionTitre);
+    
     //Dessin du terrain
     for(unsigned int i=0;i<ter.getDimx();i++) // 1ere ligne horizontale
 	{
@@ -252,8 +249,11 @@ void SDLSimple::sdlBoucle () {
     t_auto = t_monstre = t_projectile = t;
 
     srand(time(NULL));
-   /** clock_t debut = clock();
-    clock_t debut2 = clock();*/
+    int start_time = SDL_GetTicks(); // temps en millisecondes depuis le lancement du programme
+    char timer_string[50]; // chaîne de caractères pour stocker le temps
+    int minutes = 0;
+    int seconds = 0;
+
 	// tant que ce n'est pas la fin ...
 	while (!quit) {
 
@@ -263,12 +263,7 @@ void SDLSimple::sdlBoucle () {
             t_auto = nt;
         }
 
-        //jeu.actionAutomatiques();
         jeu.verifierLimitesJoueur(jeu.getTerrain()); // Verifier la position du personnage pour le placer dans l'écran
-      /**  clock_t fin = clock();
-        clock_t fin2 = clock();
-      	int duree = (int)(fin - debut) / CLOCKS_PER_SEC;
-        int duree2 = (int)(fin2 - debut2) / CLOCKS_PER_SEC; */
         
 		if (nt-t_monstre>=1000){ // On ajout un monstre chaque seconde
 			t_monstre=nt;
@@ -313,6 +308,20 @@ void SDLSimple::sdlBoucle () {
 
 		// on affiche le jeu sur le buffer cach�
 		sdlAff();
+
+    // Afficher le timer :
+            // Calculer le temps écoulé en minutes et secondes
+            int elapsed_time = (SDL_GetTicks() - start_time) / 1000; // temps écoulé en secondes
+            minutes = elapsed_time / 60;
+            seconds = elapsed_time % 60;
+            // Mettre à jour la chaîne de caractères pour afficher le temps
+            sprintf(timer_string, " T i m e : %02d:%02d", minutes, seconds);
+            // Créer la surface de texte et la charger dans la texture
+            font_im.setSurface(TTF_RenderText_Solid(font, timer_string, font_color));
+            font_im.loadFromCurrentSurface(renderer);
+            SDL_Rect positionTimer; // position du texte sur l'écran
+            positionTimer.x = 1670; positionTimer.y = 20; positionTimer.w =200;positionTimer.h = 50;
+            SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTimer);
 
 		// on permute les deux buffers (cette fonction ne doit se faire qu'une seule fois dans la boucle)
         SDL_RenderPresent(renderer);
