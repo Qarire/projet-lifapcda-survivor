@@ -11,8 +11,8 @@ using namespace std;
 
 Jeu::Jeu()
 {
-   map = Terrain(1850, 900); /* map = Terrain(500.1, 500.1); */ // map = Terrain(10000, 10000);
-    /*joueur = Personnage(Vecteur(250, 250), 100);*/joueur = Personnage(Vecteur(1900/2, 950/2), 100);// joueur = Personnage(Vecteur(950, 475), 100);
+   map = Terrain(1800, 900); /* map = Terrain(500.1, 500.1); */ // map = Terrain(10000, 10000);
+    /*joueur = Personnage(Vecteur(250, 250), 100);*/joueur = Personnage(Vecteur(1800/2, 900/2), 100);// joueur = Personnage(Vecteur(950, 475), 100);
     mob.push_back(Monstre(Vecteur(200, 205), 1));
     proj.push_back(Projectile(joueur.getPos(), Vecteur(), 1));
 }

@@ -258,8 +258,20 @@ void SDLSimple::menuAff () {
 	font_im.setSurface(TTF_RenderText_Solid(font,"JEU SURVIVOR",font_color));
 	font_im.loadFromCurrentSurface(renderer);
     SDL_Rect positionTitre;
-    positionTitre.x = 20;positionTitre.y = 20;positionTitre.w =200;positionTitre.h = 50;
+    positionTitre.x = 900;positionTitre.y = 100;positionTitre.w =200;positionTitre.h = 50;
     SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionTitre);
+
+
+
+
+
+    font_im.setSurface(TTF_RenderText_Solid(font,"APPUYEZ SUR ENTREZ POUR JOUER !",font_color));
+    font_im.loadFromCurrentSurface(renderer);
+    SDL_Rect positionbouton;
+    positionbouton.x = 900;positionbouton.y = 500;positionbouton.w =200;positionbouton.h = 50;
+    SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionbouton);
+
+
 
 }
 
@@ -363,6 +375,9 @@ void SDLSimple::sdlBoucle () {
 			}
 		}
 
+        if(!jeu.FinJeu(jeu.getPersonnage())) {
+			quit = true;
+		}
 		// on affiche le jeu sur le buffer cach�
 		sdlAff();
 
