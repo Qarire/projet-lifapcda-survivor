@@ -253,7 +253,7 @@ void SDLSimple::menuAff () {
     
     font_color.r = 0;font_color.g = 0;font_color.b = 0;
     
-    char titre_string[50];
+  
     
 	font_im.setSurface(TTF_RenderText_Solid(font,"JEU SURVIVOR",font_color));
 	font_im.loadFromCurrentSurface(renderer);
