@@ -181,6 +181,11 @@ void SDLSimple::sdlAff () {
 	SDL_SetRenderDrawColor(renderer, 255,255, 255, 255);
      SDL_RenderClear(renderer);
 
+
+    //Arriere plan Menu
+    font_im.setSurface(TTF_RenderText_Solid(font,"** Survivor **",font_color));
+	//font_im.loadFromCurrentSurface(renderer);
+
     //Dessiner l'arrière plan
 
      for(unsigned int x=0; x<jeu.getTerrain().getDimx(); x+=626) {
@@ -240,6 +245,53 @@ void SDLSimple::sdlAff () {
 
 }
 
+void SDLSimple::menuAff () {
+
+    SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(renderer, 255,255, 255, 255);
+    
+    
+    font_color.r = 0;font_color.g = 0;font_color.b = 0;
+    
+    char titre_string[50];
+    
+	font_im.setSurface(TTF_RenderText_Solid(font,"JEU SURVIVOR",font_color));
+	font_im.loadFromCurrentSurface(renderer);
+    SDL_Rect positionTitre;
+    positionTitre.x = 20;positionTitre.y = 20;positionTitre.w =200;positionTitre.h = 50;
+    SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionTitre);
+
+}
+
+void SDLSimple::menuBoucle ()  {
+    SDL_Event events;
+	bool quit = false;
+
+    while (!quit) { 
+        while (SDL_PollEvent(&events)) {
+			if (events.type == SDL_QUIT) quit = true;           // Si l'utilisateur a clique sur la croix de fermeture
+			else if (events.type == SDL_KEYDOWN) {              // Si une touche est enfoncee
+				    switch (events.key.keysym.scancode) {
+				        case SDL_SCANCODE_1:
+                            sdlBoucle();
+                            break;
+                        case SDL_SCANCODE_ESCAPE:
+                            quit = true;
+                            break;
+				            default: break;
+                    }
+       
+                }
+            }
+	    menuAff();
+        SDL_RenderPresent(renderer);
+    }			
+}
+    
+                  
+
+          
+
 void SDLSimple::sdlBoucle () {
     SDL_Event events;
 	bool quit = false;
@@ -254,8 +306,13 @@ void SDLSimple::sdlBoucle () {
     int minutes = 0;
     int seconds = 0;
 
+	
+  
+
+
 	// tant que ce n'est pas la fin ...
 	while (!quit) {
+
 
         nt = SDL_GetTicks();
         if (nt-t_auto>40) {
@@ -325,6 +382,7 @@ void SDLSimple::sdlBoucle () {
 
 		// on permute les deux buffers (cette fonction ne doit se faire qu'une seule fois dans la boucle)
         SDL_RenderPresent(renderer);
-	}
+    }
+	
 }
 

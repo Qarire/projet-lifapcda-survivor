@@ -7,6 +7,7 @@
 #include <SDL2/SDL_mixer.h>
 
 #include "Jeu.h"
+#include "menu.h"
 
 //! \brief Pour gérer une image avec SDL2
 class Image {
@@ -63,7 +64,9 @@ public :
     SDLSimple ();
     ~SDLSimple ();
     void sdlBoucle ();
+    void menuBoucle ();
     void sdlAff ();
+    void menuAff();
 
 };
 
