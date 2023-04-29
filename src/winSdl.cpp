@@ -120,7 +120,7 @@ SDLSimple::SDLSimple () : jeu() {
 	int dimy = jeu.getTerrain().getDimy();
 
     // Creation de la fenetre
-    window = SDL_CreateWindow("Survivor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, dimx, dimy, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+    window = SDL_CreateWindow("Survivor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, dimx+10, dimy+10, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (window == nullptr) {
         cout << "Erreur lors de la creation de la fenetre : " << SDL_GetError() << endl; 
         SDL_Quit(); 
@@ -212,7 +212,7 @@ void SDLSimple::sdlAff () {
 	font_im.setSurface(TTF_RenderText_Solid(font,pv_string,font_color));
 	font_im.loadFromCurrentSurface(renderer);
     SDL_Rect positionTitre;
-    positionTitre.x = 20;positionTitre.y = 20;positionTitre.w =200;positionTitre.h = 50;
+    positionTitre.x = 10;positionTitre.y = 20;positionTitre.w =200;positionTitre.h = 50;
     SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionTitre);
     
     //Dessin du terrain
@@ -332,7 +332,7 @@ void SDLSimple::sdlBoucle () {
             t_auto = nt;
         }
 
-        jeu.verifierLimitesJoueur(jeu.getTerrain()); // Verifier la position du personnage pour le placer dans l'écran
+        jeu.verifierLimitesJoueur2(jeu.getTerrain()); // Verifier la position du personnage pour le placer dans l'écran
         
 		if (nt-t_monstre>=1000){ // On ajout un monstre chaque seconde
 			t_monstre=nt;
@@ -392,7 +392,7 @@ void SDLSimple::sdlBoucle () {
             font_im.setSurface(TTF_RenderText_Solid(font, timer_string, font_color));
             font_im.loadFromCurrentSurface(renderer);
             SDL_Rect positionTimer; // position du texte sur l'écran
-            positionTimer.x = 1670; positionTimer.y = 20; positionTimer.w =200;positionTimer.h = 50;
+            positionTimer.x = jeu.getTerrain().getDimx()-210; positionTimer.y = 20; positionTimer.w =200;positionTimer.h = 50;
             SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTimer);
 
 		// on permute les deux buffers (cette fonction ne doit se faire qu'une seule fois dans la boucle)
