@@ -1,5 +1,4 @@
 #include "Jeu.h"
-
 #include <limits>
 #include <ctime>
 #include <iostream>
@@ -11,25 +10,14 @@ using namespace std;
 
 Jeu::Jeu()
 {
-   map = Terrain(1800, 900); /* map = Terrain(500.1, 500.1); */ // map = Terrain(10000, 10000);
-    /*joueur = Personnage(Vecteur(250, 250), 100);*/joueur = Personnage(Vecteur(1800/2, 900/2), 100);// joueur = Personnage(Vecteur(950, 475), 100);
+   map = Terrain(1800, 900); /* map = Terrain(500.1, 500.1); */
+    /*joueur = Personnage(Vecteur(250, 250), 100);*/joueur = Personnage(Vecteur(1800/2, 900/2), 100);
     mob.push_back(Monstre(Vecteur(200, 205), 1));
     proj.push_back(Projectile(joueur.getPos(), Vecteur(), 1));
 }
 Jeu::~Jeu()
 {
 }
-/*
-int Jeu::gettemps() const
-{
-    return temps;
-}
-
-void Jeu::settemps(int t)
-{
-    temps=t;
-}
-*/
 
 Personnage Jeu::getPersonnage() const
 {
@@ -76,11 +64,13 @@ void Jeu::degats_collision_mob(const Terrain &map, Monstre &mob, Personnage &jou
     int new_pv_mob;
     int new_pv_joueur;
 
-    // Si la distance entre le monstre et le personnage est <= 27 on inflige des degats
+    int degats = rand() % 6 + 6; //Dégats aléatoire
+
+    // Si la distance entre le monstre et le personnage est <= 20 on inflige des degats
     //abs --> pour prendre la valeur absolue
-    if (abs(joueur.getPos().getX() - mob.getPos().getX()) <= 27 && abs(joueur.getPos().getY() - mob.getPos().getY() <= 27)) // 12+25
+    if (abs(joueur.getPos().getX() - mob.getPos().getX()) <= 20 && abs(joueur.getPos().getY() - mob.getPos().getY() <= 27)) 
     {
-        new_pv_joueur = joueur.getPV() - 20; // joueur prend x points de degats par mob
+        new_pv_joueur = joueur.getPV() - degats; // joueur prend x points de degats par mob
         joueur.setPV(new_pv_joueur);
 
         new_pv_mob = mob.getPV() - 1; // mob prend x points de degats
@@ -93,7 +83,7 @@ void Jeu::degats_collision_proj(const Terrain &map, Monstre &mob, Projectile &pr
 
     int new_pv_mob, new_pv_proj;
     // Si la distance entre le monstre et le projectil est <= 15 on inflige des degats
-    if (abs( proj.getpos().getX() - mob.getPos().getX()) <=15 && abs( proj.getpos().getY() - mob.getPos().getY()<=15))
+    if (abs( proj.getpos().getX() - mob.getPos().getX()) <=5 && abs( proj.getpos().getY() - mob.getPos().getY()<=5)) //15
     {
         new_pv_mob = mob.getPV() - 1; // monstre prend x points de degats par projectile
         mob.setPV(new_pv_mob);
@@ -247,11 +237,17 @@ void Jeu::actionAutomatiques()
 
             // Trouver le projectile le plus proche du monstre
             double distance_min = std::numeric_limits<double>::infinity();
-            int index_proj_proche = -1;
+            int index_monstre_proche = -1;
 
             // Boucler sur les projectiles pour trouver le projectile le plus proche
             for (auto it_p = proj.begin(); it_p != proj.end(); ++it_p)
             {
+                // Vérifier si le projectile a déjà une cible
+                if (it_p->getTarget())
+                {
+                    continue; // Passer directement au projectile suivant
+                }
+
                 // Vérifier si le projectile est mort et le supprimer s'il est mort
                 if (!it_p->enVie())
                 {
@@ -264,52 +260,38 @@ void Jeu::actionAutomatiques()
                     }
                 }
 
+                 // Condition pour vérifier si le projectile n'a pas de cible (ne fonctionne pas correctement!)
+                /*if (!it_p->getTarget())
+                {
+                    it_p->setpos(joueur.getPos()); // Si le projectile n'a pas de cible, coller au personnage
+                }*/
+
                 double distance = map.getDistance(it_m->getPos().getX(), it_m->getPos().getY(), it_p->getpos().getX(), it_p->getpos().getY());
-                if (distance < distance_min /*&& map.getDistance(joueur.getPos().getX(), joueur.getPos().getY(), it_m->getPos().getX(), it_m->getPos().getY()) <=300 */)
+                if (distance < distance_min && (!it_p->getTarget())  && distance<=350 )
                 {
                     distance_min = distance;
-                    index_proj_proche = std::distance(proj.begin(), it_p);
+                    index_monstre_proche = std::distance(proj.begin(), it_p); //Récupérer l'indice du projectile
                 }
+                
             }
 
             // Si un projectile est trouvé, envoyer le projectile sur le monstre
-            if (index_proj_proche != -1)
+            if (index_monstre_proche != -1)
             {
+        
                 // Envoyer le projectile sur le monstre
-                proj[index_proj_proche].ProjectilePoursuiteMonstre(it_m->getPos(), map);
-
+                proj[index_monstre_proche].ProjectilePoursuiteMonstre(it_m->getPos(), map);
+                proj[index_monstre_proche].setTarget(true); // Marquer le projectile comme ayant une cible
+                proj[index_monstre_proche].setTarget(false); // Mettre hasTarget à false
                 // Infliger des dégâts au monstre en cas de collision
-                degats_collision_proj(map, *it_m, proj[index_proj_proche]);
+                degats_collision_proj(map, *it_m, proj[index_monstre_proche]);
             }
 
             // Déplacer automatiquement le monstre
-           // it_m->deplacementAuto(map);
+            // it_m->deplacementAuto(map);
 
             // Passer au monstre suivant
             ++it_m;
         }
     }
 }
-
-
-/*
-Vecteur Jeu::tirerProjectile( const Personnage &p, const Terrain &t,
-Monstre &mob, Projectile &proj )
-{monstres
-    // Trouver le monstre le plus proche
-    double distance_min = std::numeric_limits<double>::infinity(); // initialisation avec une valeur très grande
-    int index_monstre_proche = -1; // initialisation à -1 pour vérifier si on a trouvé un monstre
-    for (long unsigned int i = 0; i < mob.size(); i++)
-    {
-        double distance = t.getDistance(p.getPos().getX(), p.getPos().getY(), monstres[i].getPos().getX(), monstres[i].getPos().getY());
-        if (distance < distance_min) {
-            distance_min = distance;
-            index_monstre_proche = i;
-            proj.ProjectilePoursuiteMonstre(mob[index_monstre_proche].getPos(),t);
-        }
-    }
-    cout<<"Le monstre le plus proche est loin de : "<<distance_min<<" px"<<endl;
-    // Si on a trouvé un monstre, créer un projectile qui le vise
-
-}
-*/
