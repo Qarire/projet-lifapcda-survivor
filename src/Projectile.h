@@ -8,10 +8,13 @@
 class Projectile {
     private :
 	
-	Vecteur p,v;
-	int p_pv;
-
+	Vecteur p,v;  // position du projectile
+	int p_pv;		// Points de vie du projictile 
+	bool hasTarget; // indique si le projectile a déjà choisi une cible
     public:
+
+		bool enVie() const;
+		/** @brief booléan utiliser pour détruir un projectile une fois qu'il touche un monstre **/
 
 		Projectile();
 		/** @brief Constructeur par défaut du projectile **/
@@ -25,31 +28,41 @@ class Projectile {
 		Vecteur getpos() const;
     	/** @brief recupere la position du projectile **/
     	
+		/** @brief Mutateur pour modifier la position d'un projectile*/
+		void setpos(Vecteur newpos);
+
 		void depDroite (const Terrain &t);
 		/** @brief deplacement droite projectile*/
+
 		void depGauche (const Terrain &t);
-		/** @brief deplacement droite projectile*/
+		/** @brief deplacement gauche projectile*/
+
 		void depHaut (const Terrain &t);
-		/** @brief deplacement droite projectile*/
+		/** @brief deplacement haut projectile*/
+
 		void depBas (const Terrain &t);
-		/** @brief deplacement droite projectile*/
+		/** @brief deplacement bas projectile*/
+
 		void depAuto (const Terrain &t);
 		/** @brief deplacement auto projectile*/
 		
     	Vecteur getvit() const;
-    	/** @brief recupere la vitesse du projectile **/
-	
+		/** @brief accesseur pour récuperer la vitesse */
+		 
 		void ProjectilePoursuiteMonstre(const Vecteur& arrivee, const Terrain &t);
+		/** @brief fonction permet au projectile de suivre un monstre */
 
-		bool enVie() const;
+		/** @brief accesseur pour récuperer les points de vie d'un monstre**/
+		int getPV() const;
+	
+		/** @brief Mutateur pour modifier les points de vie d'un monstre*/
+		void setPV(int hp);
 
-		/** @brief accesseur pour récuperer les points de vie d'un monstre
-     	**/
-	int getPV() const;
-	
-	/** @brief Mutateur pour modifier les points de vie d'un monstre*/
-	void setPV(int hp);
-	
+		/** @brief accesseur pour récuperer le booléan hasTarget**/
+		bool getTarget() const;
+
+		/** @brief Mutateur pour modifier le booléan hasTarget*/
+		void setTarget(bool hasTarget);	
 };
 
 #endif

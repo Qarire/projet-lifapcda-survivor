@@ -12,7 +12,8 @@ Projectile::Projectile() {
 Projectile::Projectile(Vecteur pos, Vecteur vit, int hp){
     p = pos;                // Notamment le Vecteur pos du Personnage
     v = vit;  
-    p_pv = hp;              
+    p_pv = hp;   
+    hasTarget=false;           
 }
 
 
@@ -77,13 +78,16 @@ Vecteur Projectile::getpos() const {
     return p;
 }
 
+void Projectile::setpos(Vecteur newpos) {
+    p = newpos;
+}
+
 Vecteur Projectile::getvit() const {
 
     return v;
 }
 
 
-//++
 void Projectile::ProjectilePoursuiteMonstre(const Vecteur& arrivee, const Terrain &t)
 {
     if (p.getX() != arrivee.getX() || p.getY() != arrivee.getY()) {
@@ -100,3 +104,10 @@ void Projectile::ProjectilePoursuiteMonstre(const Vecteur& arrivee, const Terrai
     }
 }
 
+ bool Projectile::getTarget() const {
+        return hasTarget;
+}
+
+ void Projectile::setTarget(bool nv_hasTarget) {
+    hasTarget = nv_hasTarget;
+}
