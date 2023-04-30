@@ -111,7 +111,8 @@ SDLSimple::SDLSimple () : jeu() {
     {
         cout << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << endl;
         cout << "No sound !!!" << endl;
-        SDL_Quit();exit(1);
+        //SDL_Quit();
+        //exit(1);
         withSound = false;
     }
     else withSound = true;
@@ -134,7 +135,7 @@ SDLSimple::SDLSimple () : jeu() {
     im_monstre.loadFromFile("data/ghost.png", renderer);
     im_terrain.loadFromFile("data/Black_blocs.jpg", renderer);
     im_projectile.loadFromFile("data/projectile.png", renderer);
-    im_remplirTerrain.loadFromFile("data/3.webp", renderer);
+    im_remplirTerrain.loadFromFile("data/7.webp", renderer);
    
 
   // FONTS
@@ -148,18 +149,74 @@ SDLSimple::SDLSimple () : jeu() {
 	    }
 
 
-   /*   // SONS
+      // SONS
     if (withSound)
     {
-       sound = Mix_LoadWAV("data/son.wav");
-        if (sound == nullptr) 
-            sound = Mix_LoadWAV("../data/son.wav");
-        if (sound == nullptr) {
-                cout << "Failed to load son.wav! SDL_mixer Error: " << Mix_GetError() << endl; 
+       s_menu_musique = Mix_LoadWAV("data/Son/menuTrap.mp3");
+        if (s_menu_musique == nullptr) 
+            s_menu_musique = Mix_LoadWAV("../data/Son/menuTrap.mp3");
+        if (s_menu_musique == nullptr) {
+                cout << "Failed to load menuTrap.mp3 SDL_mixer Error: " << Mix_GetError() << endl; 
                 SDL_Quit();
                 exit(1);
         }
-    }*/
+        s_start_effect = Mix_LoadWAV("data/Son/horror.wav");
+        if (s_start_effect == nullptr) 
+            s_start_effect = Mix_LoadWAV("../data/Son/horror.wav");
+        if (s_start_effect == nullptr) {
+                cout << "Failed to load horror.wav SDL_mixer Error: " << Mix_GetError() << endl; 
+                SDL_Quit();
+                exit(1);
+        }
+        s_choix_menu = Mix_LoadWAV("data/Son/click-for-game-menu-131903.mp3");
+        if (s_choix_menu == nullptr) 
+            s_choix_menu = Mix_LoadWAV("../data/Son/click-for-game-menu-131903.mp3");
+        if (s_choix_menu == nullptr) {
+                cout << "Failed to load click-for-game-menu-131903.mp3 SDL_mixer Error: " << Mix_GetError() << endl; 
+                SDL_Quit();
+                exit(1);
+        }
+        s_fin_jeu = Mix_LoadWAV("data/Son/fail.wav");
+        if (s_fin_jeu == nullptr) 
+            s_fin_jeu = Mix_LoadWAV("../data/Son/fail.wav");
+        if (s_fin_jeu == nullptr) {
+                cout << "Failed to load fail.wav SDL_mixer Error: " << Mix_GetError() << endl; 
+                SDL_Quit();
+                exit(1);
+        }
+        s_jeu_musique = Mix_LoadWAV("data/Son/ambients-for-rituals-04-114793.mp3");
+        if (s_jeu_musique == nullptr) 
+            s_jeu_musique = Mix_LoadWAV("../data/Son/ambients-for-rituals-04-114793.mp3");
+        if (s_jeu_musique == nullptr) {
+                cout << "Failed to load ambients-for-rituals-04-114793.mp3 SDL_mixer Error: " << Mix_GetError() << endl; 
+                SDL_Quit();
+                exit(1);
+        }
+         s_degat_monstre = Mix_LoadWAV("data/Son/damage.wav");
+        if (s_degat_monstre == nullptr) 
+            s_degat_monstre = Mix_LoadWAV("../data/Son/damage.wav");
+        if (s_degat_monstre == nullptr) {
+                cout << "Failed to load damage.wav SDL_mixer Error: " << Mix_GetError() << endl; 
+                SDL_Quit();
+                exit(1);
+        }
+        s_degat_projectile = Mix_LoadWAV("data/Son/metal-hit-84608.wav");
+        if (s_degat_projectile == nullptr) 
+            s_degat_projectile = Mix_LoadWAV("../data/Son/metal-hit-84608.wav");
+        if (s_degat_projectile == nullptr) {
+                cout << "Failed to load metal-hit-84608.mp3 SDL_mixer Error: " << Mix_GetError() << endl; 
+                SDL_Quit();
+                exit(1);
+        }
+        s_tire_projectile = Mix_LoadWAV("data/Son/fire-magic-6947.wav");
+        if (s_tire_projectile == nullptr) 
+            s_tire_projectile = Mix_LoadWAV("../data/Son/fire-magic-6947.wav");
+        if (s_tire_projectile == nullptr) {
+                cout << "Failed to load fire-magic-6947.mp3 SDL_mixer Error: " << Mix_GetError() << endl; 
+                SDL_Quit();
+                exit(1);
+        }
+    }
 }
 
 SDLSimple::~SDLSimple () {
@@ -188,10 +245,12 @@ void SDLSimple::sdlAff () {
 
     //Dessiner l'arrière plan
 
-     for(unsigned int x=0; x<jeu.getTerrain().getDimx(); x+=626) {
-        for(unsigned int y=0; y<jeu.getTerrain().getDimy(); y+=543) 
+    int img_dimx =650;
+    int img_dimy= 650;
+     for(unsigned int x=0; x<jeu.getTerrain().getDimx(); x+=img_dimx) {
+        for(unsigned int y=0; y<jeu.getTerrain().getDimy(); y+=img_dimy) 
         {
-            im_remplirTerrain.draw(renderer, x,y, 626,543);
+            im_remplirTerrain.draw(renderer, x,y,img_dimx ,img_dimy);
         }
     }
 
@@ -201,6 +260,7 @@ void SDLSimple::sdlAff () {
     //Dessin des Monstres
     for(unsigned int i=0;i<mon.size();i++)
     {
+        if (mon.at(i).col_mob_per) Mix_PlayChannel(-1,s_degat_monstre,0);
         im_monstre.draw(renderer, mon.at(i).getPos().getX()-12,mon.at(i).getPos().getY()-12,24,24);
     }
 
@@ -212,7 +272,7 @@ void SDLSimple::sdlAff () {
 	font_im.setSurface(TTF_RenderText_Solid(font,pv_string,font_color));
 	font_im.loadFromCurrentSurface(renderer);
     SDL_Rect positionTitre;
-    positionTitre.x = 10;positionTitre.y = 20;positionTitre.w =200;positionTitre.h = 50;
+    positionTitre.x = 20;positionTitre.y = 20;positionTitre.w =200;positionTitre.h = 50;
     SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionTitre);
     
     //Dessin du terrain
@@ -239,56 +299,238 @@ void SDLSimple::sdlAff () {
 
     for(unsigned int i=0;i<proj.size();i++)
 	{
-		//win.print(proj.at(i).getpos().getX(),proj.at(i).getpos().getY(),'.');
+        if (proj.at(i).col_proj_mob) Mix_PlayChannel(-1,s_degat_projectile,0); //colision = son
         im_projectile.draw(renderer,proj.at(i).getpos().getX(),proj.at(i).getpos().getY(),10,10);
 	}
-
+    
 }
-
+////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////FONCTIONS MEMBRES MENU ////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 void SDLSimple::menuAff () {
 
-    SDL_RenderClear(renderer);
-    SDL_SetRenderDrawColor(renderer, 255,255, 255, 255);
-    
-    
-    font_color.r = 0;font_color.g = 0;font_color.b = 0;
-    
-  
-    
-	font_im.setSurface(TTF_RenderText_Solid(font,"JEU SURVIVOR",font_color));
-	font_im.loadFromCurrentSurface(renderer);
-    SDL_Rect positionTitre;
-    positionTitre.x = 900;positionTitre.y = 100;positionTitre.w =200;positionTitre.h = 50;
-    SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionTitre);
+SDL_RenderClear(renderer);
+SDL_SetRenderDrawColor(renderer, 255,255, 255, 255);
+font_color.r = 0; font_color.g = 0; font_color.b = 0;
 
+// Afficher le 1er choix : JEU SURVIVOR
+font_im.setSurface(TTF_RenderText_Solid(font, "JEU SURVIVOR :", font_color));
+font_im.loadFromCurrentSurface(renderer);
+SDL_Rect positionTitre;
+positionTitre.x = 800; positionTitre.y = 100; positionTitre.w = 400; positionTitre.h = 100;
+SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTitre);
 
+// Afficher le 2eme choix : APPUYEZ SUR ENTREZ POUR JOUER !
+font_im.setSurface(TTF_RenderText_Solid(font, " JOUER (1)", font_color));
+font_im.loadFromCurrentSurface(renderer);
+SDL_Rect positionbouton;
+positionbouton.x = 900; positionbouton.y = 300; positionbouton.w = 200; positionbouton.h = 50;
+SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionbouton);
 
+// Afficher le 3ème choix : A PROPOS DU JEU
+font_im.setSurface(TTF_RenderText_Solid(font, "A PROPOS DU JEU (2)", font_color));
+font_im.loadFromCurrentSurface(renderer);
+SDL_Rect positionA;
+positionA.x = 850; positionA.y = 500; positionA.w = 300; positionA.h = 50;
+SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionA);
 
+// Afficher le 4ème choix : INFO DEVELOPPEURS
+font_im.setSurface(TTF_RenderText_Solid(font, "INFO DEVELOPPEURS (3)", font_color));
+font_im.loadFromCurrentSurface(renderer);
+SDL_Rect positionInfo;
+positionInfo.x = 850; positionInfo.y = 700; positionInfo.w = 300; positionInfo.h = 50;
+SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionInfo);
 
-    font_im.setSurface(TTF_RenderText_Solid(font,"APPUYEZ SUR ENTREZ POUR JOUER !",font_color));
-    font_im.loadFromCurrentSurface(renderer);
-    SDL_Rect positionbouton;
-    positionbouton.x = 900;positionbouton.y = 500;positionbouton.w =200;positionbouton.h = 50;
-    SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionbouton);
+// Afficher le 5ème choix : QUITER
+font_im.setSurface(TTF_RenderText_Solid(font, "QUITTER (Esc)", font_color));
+font_im.loadFromCurrentSurface(renderer);
+SDL_Rect positionQuitter;
+positionQuitter.x = 900; positionQuitter.y = 900; positionQuitter.w = 200; positionQuitter.h = 50;
+SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionQuitter);
 
-
+SDL_RenderPresent(renderer);
 
 }
+
+void SDLSimple::menuAfficheInfoDev() {
+    SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    font_color.r = 0;
+    font_color.g = 0;
+    font_color.b = 0;
+
+    //Afficher le titre
+    font_im.setSurface(TTF_RenderText_Solid(font, "INFO DEVELOPPEURS :", font_color));
+    font_im.loadFromCurrentSurface(renderer);
+    SDL_Rect positionTitre;
+    positionTitre.x = 800;
+    positionTitre.y = 100;
+    positionTitre.w = 400;
+    positionTitre.h = 50;
+    SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTitre);
+
+    //Afficher le texte d'information
+    font_im.setSurface(TTF_RenderText_Solid(font, "Ce jeu a ete developpe par XXX et YYY", font_color));
+    font_im.loadFromCurrentSurface(renderer);
+    SDL_Rect positionTexte;
+    positionTexte.x = 500;
+    positionTexte.y = 300;
+    positionTexte.w = 800;
+    positionTexte.h = 50;
+    SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTexte);
+
+    SDL_RenderPresent(renderer);
+
+    bool quitter = false;
+    while (!quitter) {
+        SDL_Event evenement;
+        while (SDL_PollEvent(&evenement)) {
+            switch (evenement.type) {
+                case SDL_KEYDOWN:
+                    if (evenement.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
+                        quitter = true;
+                    }
+                    break;
+                case SDL_QUIT:
+                    quitter = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+}
+
+void SDLSimple::menuAfficheDescription() {
+    SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    font_color.r = 0;
+    font_color.g = 0;
+    font_color.b = 0;
+
+    //Afficher le titre
+    font_im.setSurface(TTF_RenderText_Solid(font, "DESCRIPTION DU JEU : ", font_color));
+    font_im.loadFromCurrentSurface(renderer);
+    SDL_Rect positionTitre;
+    positionTitre.x = 800;
+    positionTitre.y = 100;
+    positionTitre.w = 400;
+    positionTitre.h = 50;
+    SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTitre);
+
+    //Afficher le texte d'information
+    font_im.setSurface(TTF_RenderText_Solid(font, "Le but du jeu est XYZ", font_color));
+    font_im.loadFromCurrentSurface(renderer);
+    SDL_Rect positionTexte;
+    positionTexte.x = 500;
+    positionTexte.y = 300;
+    positionTexte.w = 800;
+    positionTexte.h = 50;
+    SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTexte);
+
+    SDL_RenderPresent(renderer);
+
+    bool quitter = false;
+    while (!quitter) {
+        SDL_Event evenement;
+        while (SDL_PollEvent(&evenement)) {
+            switch (evenement.type) {
+                case SDL_KEYDOWN:
+                    if (evenement.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
+                        quitter = true;
+                    }
+                    break;
+                case SDL_QUIT:
+                    quitter = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+}
+
+void SDLSimple::menuAfficheGameOver() {
+    SDL_Event event;
+    bool quit_gameover = false;
+    SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    font_color.r = 0;
+    font_color.g = 0;
+    font_color.b = 0;
+
+    //Afficher GAME OVER
+    font_im.setSurface(TTF_RenderText_Solid(font, "GAME OVER", font_color));
+    font_im.loadFromCurrentSurface(renderer);
+    SDL_Rect positionGameOver;
+    positionGameOver.x = 400;
+    positionGameOver.y = 200;
+    positionGameOver.w = 600;
+    positionGameOver.h = 50;
+    SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionGameOver);
+
+    //Afficher le message
+    font_im.setSurface(TTF_RenderText_Solid(font, "Vous avez perdu...", font_color));
+    font_im.loadFromCurrentSurface(renderer);
+    SDL_Rect positionMessage;
+    positionMessage.x = 400;
+    positionMessage.y = 400;
+    positionMessage.w = 600;
+    positionMessage.h = 50;
+    SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionMessage);
+
+    SDL_RenderPresent(renderer);
+
+    while (!quit_gameover) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                quit_gameover = true;
+            }
+            else if (event.type == SDL_KEYDOWN) {
+                if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
+                    quit_gameover = true;
+                    menuBoucle(); // Revenir au menu
+                }
+            }
+        }
+    }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////// BOUCLE MENU ////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 void SDLSimple::menuBoucle ()  {
     SDL_Event events;
-	bool quit = false;
+	bool quit_menu = false;
 
-    while (!quit) { 
+    
+    while (!quit_menu) { 
+        
+        if (withSound) menu_active_channel= Mix_PlayChannel(-1,s_menu_musique,0); //Musique menu
+
         while (SDL_PollEvent(&events)) {
-			if (events.type == SDL_QUIT) quit = true;           // Si l'utilisateur a clique sur la croix de fermeture
-			else if (events.type == SDL_KEYDOWN) {              // Si une touche est enfoncee
+			if (events.type == SDL_QUIT) quit_menu = true;           // Si l'utilisateur a clique sur la croix de fermeture
+			else if (events.type == SDL_KEYDOWN) {                   // Si une touche est enfoncee
 				    switch (events.key.keysym.scancode) {
-				        case SDL_SCANCODE_1:
-                            sdlBoucle();
+				        case SDL_SCANCODE_1: 
+                            Mix_HaltChannel(menu_active_channel);   //Arreter la musique du menu
+                            Mix_PlayChannel(-1,s_choix_menu,0);     // son des touches
+                            sleep(1);
+                            if (withSound) Mix_PlayChannel(-1,s_start_effect,0);
+                            if (withSound) jeu_active_channel= Mix_PlayChannel(-1,s_jeu_musique,0); // On joue la musique du jeu
+                            sdlBoucle();  
+                            sleep(1);
+                            break;
+                        case SDL_SCANCODE_2: Mix_PlayChannel(-1,s_choix_menu,0);
+                              menuAfficheDescription();
+                            break;
+                        case SDL_SCANCODE_3: Mix_PlayChannel(-1,s_choix_menu,0);
+                            menuAfficheInfoDev();  
                             break;
                         case SDL_SCANCODE_ESCAPE:
-                            quit = true;
+                            quit_menu = true;
                             break;
 				            default: break;
                     }
@@ -301,12 +543,13 @@ void SDLSimple::menuBoucle ()  {
 }
     
                   
-
-          
+////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////// BOUCLE SDL ////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////   
 
 void SDLSimple::sdlBoucle () {
     SDL_Event events;
-	bool quit = false;
+	bool quit_jeu = false;
 
     Uint32 t = SDL_GetTicks(), nt;
     Uint32 t_auto, t_monstre, t_projectile;
@@ -317,14 +560,10 @@ void SDLSimple::sdlBoucle () {
     char timer_string[50]; // chaîne de caractères pour stocker le temps
     int minutes = 0;
     int seconds = 0;
-    
-
-	char number_string[50];
-  
 
 
 	// tant que ce n'est pas la fin ...
-	while (!quit) {
+	while (!quit_jeu) {
 
 
         nt = SDL_GetTicks();
@@ -342,11 +581,12 @@ void SDLSimple::sdlBoucle () {
         if (nt-t_projectile>=3000){ // On ajoute un projectile chaque 3 secondes
 			t_projectile=nt;
             jeu.genereProjectile(jeu.getPersonnage());
+            Mix_PlayChannel(-1,s_tire_projectile,0);
 		}
 
 		// tant qu'il y a des évenements à traiter (cette boucle n'est pas bloquante)
 		while (SDL_PollEvent(&events)) {
-			if (events.type == SDL_QUIT) quit = true;           // Si l'utilisateur a clique sur la croix de fermeture
+			if (events.type == SDL_QUIT) quit_jeu= true;           // Si l'utilisateur a clique sur la croix de fermeture
 			else if (events.type == SDL_KEYDOWN) {              // Si une touche est enfoncee
 				switch (events.key.keysym.scancode) {
 				case SDL_SCANCODE_UP:
@@ -366,18 +606,19 @@ void SDLSimple::sdlBoucle () {
                     break;
                 
                 case SDL_SCANCODE_ESCAPE:
-
-                    quit = true;
+                    Mix_HaltChannel(jeu_active_channel);   //Arreter la musique du jeu
+                    quit_jeu = true;
                     break;
 				default: break;
 				}
-				/*if ((withSound) && (mangePastille))
-                    Mix_PlayChannel(-1,sound,0);*/
 			}
 		}
 
         if(!jeu.FinJeu(jeu.getPersonnage())) {
-			quit = true;
+            Mix_PlayChannel(-1,s_fin_jeu,0);
+			quit_jeu = true;
+            sleep(1);
+            menuAfficheGameOver();
 		}
 		// on affiche le jeu sur le buffer cach�
 		sdlAff();
@@ -393,32 +634,11 @@ void SDLSimple::sdlBoucle () {
             font_im.setSurface(TTF_RenderText_Solid(font, timer_string, font_color));
             font_im.loadFromCurrentSurface(renderer);
             SDL_Rect positionTimer; // position du texte sur l'écran
-            positionTimer.x = jeu.getTerrain().getDimx()-210; positionTimer.y = 20; positionTimer.w =200;positionTimer.h = 50;
+            positionTimer.x = 1500; positionTimer.y = 20; positionTimer.w =200;positionTimer.h = 50;
             SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTimer);
-
-            
-            
-            int nb_mob = jeu.getVectorMonstre().size();
-            sprintf(number_string, "Monster alive :%d  " ,nb_mob);
-            font_im.setSurface(TTF_RenderText_Solid(font, number_string, font_color));
-            font_im.loadFromCurrentSurface(renderer);
-            SDL_Rect positionNumber; // position du texte sur l'écran
-            positionNumber.x = jeu.getTerrain().getDimx()-210; positionNumber.y = 120; positionNumber.w =200;positionNumber.h = 50;
-            SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionNumber);
-            
-
-
-
-
-
 
 		// on permute les deux buffers (cette fonction ne doit se faire qu'une seule fois dans la boucle)
         SDL_RenderPresent(renderer);
-
-        
-        
-
-        
     }
 	
 }

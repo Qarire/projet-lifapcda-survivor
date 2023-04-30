@@ -13,6 +13,7 @@ class Projectile {
 	bool hasTarget; // indique si le projectile a déjà choisi une cible
     public:
 
+		bool col_proj_mob;
 		bool enVie() const;
 		/** @brief booléan utiliser pour détruir un projectile une fois qu'il touche un monstre **/
 

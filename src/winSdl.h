@@ -46,7 +46,16 @@ private :
     Image font_im;
     SDL_Color font_color;
 
-    Mix_Chunk * sound;
+    Mix_Chunk * s_jeu_musique;
+    Mix_Chunk * s_menu_musique;
+    Mix_Chunk * s_tire_projectile;
+    Mix_Chunk * s_degat_projectile;
+    Mix_Chunk * s_degat_monstre;
+    Mix_Chunk * s_choix_menu;
+    Mix_Chunk * s_fin_jeu;
+    Mix_Chunk * s_start_effect;
+    Mix_Chunk * s_clique_menu;
+    
     bool withSound;
 
     Image im_personnage;
@@ -61,12 +70,18 @@ private :
     bool touche;
 public :
 
+    int menu_active_channel; //Stocké le num du canal qui joue la musique du menu
+    int jeu_active_channel; //Stocké le num du canal qui joue la musique du jeu
+
     SDLSimple ();
     ~SDLSimple ();
-    void sdlBoucle ();
-    void menuBoucle ();
-    void sdlAff ();
-    void menuAff();
+    void sdlBoucle (); //Boucle jeu
+    void menuBoucle ();//Boucle menu
+    void sdlAff ();    // Affiche jeu
+    void menuAff();    //Affiche menu jeu
+    void menuAfficheInfoDev() ; //Afficher INfo dev
+    void menuAfficheDescription();  //Afficher une discription du jeu
+    void menuAfficheGameOver(); //Afficher GAME OVER
 
 };
 

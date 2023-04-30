@@ -30,11 +30,6 @@ Terrain Jeu::getTerrain() const
 
     return map;
 }
-/*
-Monstre Jeu::getMonstre() const {
-
-    return mob;
-}*/
 
 vector<Monstre> Jeu::getVectorMonstre() const
 {
@@ -89,6 +84,7 @@ void Jeu::degats_collision_proj(const Terrain &map, Monstre &mob, Projectile &pr
     // Si la distance entre le monstre et le projectil est <= 15 on inflige des degats
     if (abs( proj.getpos().getX() - mob.getPos().getX()) <=5 && abs( proj.getpos().getY() - mob.getPos().getY()<=5)) //15
     {
+        proj.col_proj_mob=true;
         new_pv_mob = mob.getPV() - 1; // monstre prend x points de degats par projectile
         mob.setPV(new_pv_mob);
 
@@ -221,6 +217,8 @@ void Jeu::verifierLimitesJoueur(const Terrain &map)
     }
 }*/
 
+
+
 void Jeu::actionAutomatiques()
 {   
     // Parcourir les monstres
@@ -302,40 +300,37 @@ void Jeu::actionAutomatiques()
 
 void Jeu::verifierLimitesJoueur2(const Terrain &map)
 {
-    // Taille des tunnels (en pixels)
-    int tunnel_size = 25; //Marge
-
     // Vérifier si le joueur a atteint les limites de l'écran
-    if (joueur.getPos().getX() >= map.getDimx() - tunnel_size && joueur.getPos().getY() >= map.getDimy()/3 && joueur.getPos().getY() <= map.getDimy()*2/3) {
+    if (joueur.getPos().getX() >= map.getDimx() && joueur.getPos().getY() >= map.getDimy()/3 && joueur.getPos().getY() <= map.getDimy()*2/3) {
         // Si le joueur atteint le bord droit, le faire réapparaître dans le tunnel gauche
-        joueur.setPos(Vecteur(1 + tunnel_size, joueur.getPos().getY()));
+        joueur.setPos(Vecteur(1, joueur.getPos().getY()));
     }
-    else if (joueur.getPos().getX() <= 0 + tunnel_size && joueur.getPos().getY() >= map.getDimy()/3 && joueur.getPos().getY() <= map.getDimy()*2/3) {
+    else if (joueur.getPos().getX() <= 0 && joueur.getPos().getY() >= map.getDimy()/3 && joueur.getPos().getY() <= map.getDimy()*2/3) {
         // Si le joueur atteint le bord gauche, le faire réapparaître dans le tunnel droit
-        joueur.setPos(Vecteur(map.getDimx()-1 - tunnel_size, joueur.getPos().getY()));
+        joueur.setPos(Vecteur(map.getDimx()-1, joueur.getPos().getY()));
     }
-    else if (joueur.getPos().getY() >= map.getDimy() - tunnel_size && joueur.getPos().getX() >= map.getDimx()/3 && joueur.getPos().getX() <= map.getDimx()*2/3) {
+    else if (joueur.getPos().getY() >= map.getDimy() && joueur.getPos().getX() >= map.getDimx()/3 && joueur.getPos().getX() <= map.getDimx()*2/3) {
         // Si le joueur atteint le bord bas, le faire réapparaître dans la zone supérieure
-        joueur.setPos(Vecteur(joueur.getPos().getX(), map.getDimy()/3));
+        joueur.setPos(Vecteur(joueur.getPos().getX(), 1));
     }
-    else if (joueur.getPos().getY() <= 0 + tunnel_size && joueur.getPos().getX() >= map.getDimx()/3 && joueur.getPos().getX() <= map.getDimx()*2/3) {
+    else if (joueur.getPos().getY() <= 0 && joueur.getPos().getX() >= map.getDimx()/3 && joueur.getPos().getX() <= map.getDimx()*2/3) {
         // Si le joueur atteint le bord haut, le faire réapparaître dans la zone inférieure
-        joueur.setPos(Vecteur(joueur.getPos().getX(), map.getDimy()*2/3));
+        joueur.setPos(Vecteur(joueur.getPos().getX(), map.getDimy()-1));
     }
-    else if (joueur.getPos().getY() >= map.getDimy() - tunnel_size && joueur.getPos().getX() < map.getDimx()/3) {
-        // Si le joueur atteint le bord bas gauche, le faire réapparaître dans la zone supérieure
-        joueur.setPos(Vecteur(map.getDimx()*2/3, map.getDimy()/3));
+    else if (joueur.getPos().getY() >= map.getDimy() && joueur.getPos().getX() < map.getDimx()/3) {
+        // Si le joueur atteint le bord bas gauche, le faire réapparaître dans la zone supérieure droite
+        joueur.setPos(Vecteur(map.getDimx()+1, map.getDimy()/3));
     }
-    else if (joueur.getPos().getY() <= 0 + tunnel_size && joueur.getPos().getX() < map.getDimx()/3) {
-        // Si le joueur atteint le bord haut gauche, le faire réapparaître dans la zone inférieure
-        joueur.setPos(Vecteur(map.getDimx()*2/3, map.getDimy()*2/3));
+    else if (joueur.getPos().getY() <= 0 && joueur.getPos().getX() < map.getDimx()/3) {
+        // Si le joueur atteint le bord haut gauche, le faire réapparaître dans la zone inférieure droite
+        joueur.setPos(Vecteur(map.getDimx()+1, map.getDimy()*2/3));
     }
-    else if (joueur.getPos().getY() >= map.getDimy() - tunnel_size && joueur.getPos().getX() > map.getDimx()*2/3) {
-        // Si le joueur atteint le bord bas droit, le faire réapparaître dans la zone supérieure
-        joueur.setPos(Vecteur(map.getDimx()/3, map.getDimy()/3));
+    else if (joueur.getPos().getY() >= map.getDimy() && joueur.getPos().getX() > map.getDimx()*2/3) {
+        // Si le joueur atteint le bord bas droit, le faire réapparaître dans la zone supérieure gauche
+        joueur.setPos(Vecteur(1, map.getDimy()/3));
     }
-    else if (joueur.getPos().getY() <= 0 + tunnel_size && joueur.getPos().getX() > map.getDimx()*2/3) {
-        // Si le joueur atteint le bord haut droit, le faire réapparaître dans la zone inférieure
-        joueur.setPos(Vecteur(map.getDimx()/3, map.getDimy()*2/3));
+    else if (joueur.getPos().getY() <= 0 && joueur.getPos().getX() > map.getDimx()*2/3) {
+        // Si le joueur atteint le bord haut droit, le faire réapparaître dans la zone inférieure gauche
+        joueur.setPos(Vecteur(1, map.getDimy()*2/3));
     }
 }

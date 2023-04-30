@@ -21,6 +21,7 @@ class Monstre
 	int m_pv;
 	
 	public :
+	bool col_mob_per;
 	 /**
      	@brief Constructeur par défaut de la classe: initialise la position de monstre, ses points de vie
     	 **/

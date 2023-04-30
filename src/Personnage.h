@@ -11,6 +11,7 @@ class Personnage {
 
 private :
 	Vecteur pos; /* @brief les coordonnées x,y de notre personnage */
+	Vecteur pos_txt;
 	int pv; /* @brief les points de vie de notre personnage */
 	
 public :

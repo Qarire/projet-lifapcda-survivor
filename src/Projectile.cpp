@@ -13,7 +13,8 @@ Projectile::Projectile(Vecteur pos, Vecteur vit, int hp){
     p = pos;                // Notamment le Vecteur pos du Personnage
     v = vit;  
     p_pv = hp;   
-    hasTarget=false;           
+    hasTarget=false;    
+    col_proj_mob=false;       
 }
 
 

@@ -12,6 +12,7 @@ Monstre::Monstre(){
 Monstre::Monstre(Vecteur p, int hp){
     m_pos=p;
     m_pv=hp;
+	col_mob_per=false;
 }
 
 Monstre::~Monstre(){
