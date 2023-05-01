@@ -1,13 +1,13 @@
 #ifndef _MONSTRE
 #define _MONSTRE
 
-#include<iostream>
+
 #include"Terrain.h"
 #include"Vecteur.h"
 #include"Personnage.h"
-#include <vector>
+
 #define DIST 3
-using namespace std;
+
 
 class Monstre 
 {
@@ -63,9 +63,7 @@ class Monstre
 	/** @brief procédure qui permet au monstre de suivre le pernonnage 
 	 * @param le terrain et le personnage **/	 
 
-   void deplacementNaturel(const Terrain &t);
-   /** @brief procédure qui permet au monstre de  se déplacer dans une direction aléatoirement
-	 * @param le terrain **/	 
+ 
 };
 
 #endif

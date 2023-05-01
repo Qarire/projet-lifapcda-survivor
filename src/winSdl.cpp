@@ -592,7 +592,7 @@ void SDLSimple::sdlBoucle () {
             t_auto = nt;
         }
 
-        jeu.verifierLimitesJoueur2(jeu.getTerrain()); // Verifier la position du personnage pour le placer dans l'écran
+        jeu.verifierLimitesJoueur(jeu.getTerrain()); // Verifier la position du personnage pour le placer dans l'écran
         
 		if (nt-t_monstre>=1000){ // On ajout un monstre chaque seconde
 			t_monstre=nt;

@@ -1,6 +1,6 @@
 #include<iostream>
 #include "winSdl.h"
-#include "menu.h"
+
 using namespace std;
 
 

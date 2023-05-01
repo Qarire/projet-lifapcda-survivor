@@ -5,7 +5,7 @@
 #include "Personnage.h"
 #include "Monstre.h"
 #include "Projectile.h"
-#include "vector"
+#include <vector>
 
 class Jeu {
 private:
@@ -16,11 +16,6 @@ private:
     vector<Monstre> mob;    /** @brief tableau dynamique de monstres*/
 
 public:
-    /** @brief recupere le temps **/
-    int gettemps()const;
-
-/** @brief modifier le temps **/
-    void settemps(int t);
 
     Jeu();
     /** @brief Constructeur par défaut **/
