@@ -135,8 +135,8 @@ SDLSimple::SDLSimple () : jeu() {
     im_monstre.loadFromFile("data/ghost.png", renderer);
     im_terrain.loadFromFile("data/Black_blocs.jpg", renderer);
     im_projectile.loadFromFile("data/projectile.png", renderer);
-    im_remplirTerrain.loadFromFile("data/7.webp", renderer);
-    im_menu.loadFromFile("data/62054.jpg", renderer);
+    im_remplirTerrain.loadFromFile("data/jqkj.webp", renderer);
+    im_menu.loadFromFile("data/High_resolution_wallpaper_background_ID_77701691879.jpg", renderer);
    
 
   // FONTS
@@ -246,8 +246,8 @@ void SDLSimple::sdlAff () {
 
     //Dessiner l'arrière plan
 
-    int img_dimx =650;
-    int img_dimy= 650;
+    int img_dimx =325;
+    int img_dimy= 325;
      for(unsigned int x=0; x<jeu.getTerrain().getDimx(); x+=img_dimx) {
         for(unsigned int y=0; y<jeu.getTerrain().getDimy(); y+=img_dimy) 
         {
@@ -273,7 +273,7 @@ void SDLSimple::sdlAff () {
 	font_im.setSurface(TTF_RenderText_Solid(font,pv_string,font_color));
 	font_im.loadFromCurrentSurface(renderer);
     SDL_Rect positionTitre;
-    positionTitre.x = 20;positionTitre.y = 20;positionTitre.w =200;positionTitre.h = 50;
+    positionTitre.x = 20;positionTitre.y = 20;positionTitre.w =200;positionTitre.h = 30;
     SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionTitre);
     
     //Dessin du terrain
@@ -311,48 +311,48 @@ void SDLSimple::sdlAff () {
 void SDLSimple::menuAff () {
 
 SDL_RenderClear(renderer);
-SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Couleur noire
+SDL_SetRenderDrawColor(renderer, 255, 255,255, 255); // Couleur noire
 im_menu.draw(renderer, 0,0,1800 ,900);                  //Image menu
-font_color.r = 0; font_color.g = 0; font_color.b = 0;
+font_color.r = 255; font_color.g = 255; font_color.b = 255;
 
 // Afficher le 1er choix : JEU SURVIVOR
 font_im.setSurface(TTF_RenderText_Solid(font, "JEU SURVIVOR :", font_color));
 font_im.loadFromCurrentSurface(renderer);
 SDL_Rect positionTitre;
-positionTitre.x = 800; positionTitre.y = 100; positionTitre.w = 400; positionTitre.h = 100;
+positionTitre.x = 775; positionTitre.y = 100; positionTitre.w = 400; positionTitre.h = 100;
 SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTitre);
 
 // Afficher le 2eme choix : APPUYEZ SUR ENTREZ POUR JOUER !
 font_im.setSurface(TTF_RenderText_Solid(font, " JOUER (1)", font_color));
 font_im.loadFromCurrentSurface(renderer);
 SDL_Rect positionbouton;
-positionbouton.x = 900; positionbouton.y = 300; positionbouton.w = 200; positionbouton.h = 50;
+positionbouton.x = 850; positionbouton.y = 300; positionbouton.w = 200; positionbouton.h = 50;
 SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionbouton);
 
 // Afficher le 3ème choix : A PROPOS DU JEU
 font_im.setSurface(TTF_RenderText_Solid(font, "A PROPOS DU JEU (2)", font_color));
 font_im.loadFromCurrentSurface(renderer);
 SDL_Rect positionA;
-positionA.x = 850; positionA.y = 450; positionA.w = 300; positionA.h = 50;
+positionA.x = 800; positionA.y = 450; positionA.w = 300; positionA.h = 50;
 SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionA);
 
 // Afficher le 4ème choix : INFO DEVELOPPEURS
 font_im.setSurface(TTF_RenderText_Solid(font, "INFO DEVELOPPEURS (3)", font_color));
 font_im.loadFromCurrentSurface(renderer);
 SDL_Rect positionInfo;
-positionInfo.x = 850; positionInfo.y = 600; positionInfo.w = 300; positionInfo.h = 50;
+positionInfo.x = 800; positionInfo.y = 600; positionInfo.w = 300; positionInfo.h = 50;
 SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionInfo);
 
 // Afficher le 5ème choix : QUITER
 font_im.setSurface(TTF_RenderText_Solid(font, "QUITTER (Esc)", font_color));
 font_im.loadFromCurrentSurface(renderer);
 SDL_Rect positionQuitter;
-positionQuitter.x = 900; positionQuitter.y = 750; positionQuitter.w = 200; positionQuitter.h = 50;
+positionQuitter.x = 850; positionQuitter.y = 750; positionQuitter.w = 200; positionQuitter.h = 50;
 SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionQuitter);
 
 
 SDL_Rect recta;
-recta.x = 750; // Coordonnées x du coin supérieur gauche
+recta.x = 725; // Coordonnées x du coin supérieur gauche
 recta.y = 200; // Coordonnées y du coin supérieur gauche
 recta.w = 450; // Largeur du rectangle
 recta.h = 650; // Hauteur du rectangle
@@ -365,29 +365,56 @@ void SDLSimple::menuAfficheInfoDev() {
     SDL_RenderClear(renderer);
     im_menu.draw(renderer, 0,0,1800 ,900);                  //Image menu
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    font_color.r = 0;
-    font_color.g = 0;
-    font_color.b = 0;
+    font_color.r = 255;
+    font_color.g = 255;
+    font_color.b = 255;
 
     //Afficher le titre
     font_im.setSurface(TTF_RenderText_Solid(font, "INFO DEVELOPPEURS :", font_color));
     font_im.loadFromCurrentSurface(renderer);
     SDL_Rect positionTitre;
-    positionTitre.x = 800;
+    positionTitre.x = 400;
     positionTitre.y = 100;
-    positionTitre.w = 400;
+    positionTitre.w = 900;
     positionTitre.h = 50;
     SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTitre);
 
     //Afficher le texte d'information
-    font_im.setSurface(TTF_RenderText_Solid(font, "Ce jeu a ete developpe par XXX et YYY", font_color));
+    font_im.setSurface(TTF_RenderText_Solid(font, "Ce jeu a ete developpe par : ", font_color));
     font_im.loadFromCurrentSurface(renderer);
-    SDL_Rect positionTexte;
-    positionTexte.x = 500;
-    positionTexte.y = 300;
-    positionTexte.w = 800;
-    positionTexte.h = 50;
-    SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTexte);
+    SDL_Rect positionTexte1;
+    positionTexte1.x = 450;
+    positionTexte1.y = 300;
+    positionTexte1.w = 850;
+    positionTexte1.h = 50;
+    SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTexte1);
+
+     font_im.setSurface(TTF_RenderText_Solid(font, " NEDJAR Amine ", font_color));
+    font_im.loadFromCurrentSurface(renderer);
+    SDL_Rect positionTexte2;
+    positionTexte2.x = 450;
+    positionTexte2.y = 450;
+    positionTexte2.w = 800;
+    positionTexte2.h = 50;
+    SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTexte2);
+
+     font_im.setSurface(TTF_RenderText_Solid(font, " KANE Ousmane ", font_color));
+    font_im.loadFromCurrentSurface(renderer);
+    SDL_Rect positionTexte3;
+    positionTexte3.x = 450;
+    positionTexte3.y = 600;
+    positionTexte3.w = 800;
+    positionTexte3.h = 50;
+    SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTexte3);
+
+     font_im.setSurface(TTF_RenderText_Solid(font, " DIA Abdou-Karim ", font_color));
+    font_im.loadFromCurrentSurface(renderer);
+    SDL_Rect positionTexte4;
+    positionTexte4.x = 450;
+    positionTexte4.y = 750;
+    positionTexte4.w = 800;
+    positionTexte4.h = 50;
+    SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTexte4);
 
     SDL_RenderPresent(renderer);
 
@@ -416,29 +443,39 @@ void SDLSimple::menuAfficheDescription() {
     SDL_RenderClear(renderer);
     im_menu.draw(renderer, 0,0,1800 ,900);                  //Image menu
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    font_color.r = 0;
-    font_color.g = 0;
-    font_color.b = 0;
+    font_color.r = 255;
+    font_color.g = 255;
+    font_color.b = 255;
 
     //Afficher le titre
     font_im.setSurface(TTF_RenderText_Solid(font, "DESCRIPTION DU JEU : ", font_color));
     font_im.loadFromCurrentSurface(renderer);
     SDL_Rect positionTitre;
-    positionTitre.x = 800;
+    positionTitre.x = 700;
     positionTitre.y = 100;
-    positionTitre.w = 400;
-    positionTitre.h = 50;
+    positionTitre.w = 500;
+    positionTitre.h = 100;
     SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTitre);
 
     //Afficher le texte d'information
-    font_im.setSurface(TTF_RenderText_Solid(font, "Le but du jeu est XYZ", font_color));
+    font_im.setSurface(TTF_RenderText_Solid(font, " Le but de jeu est de survivre dans le monde la duree la plus longue possible,", font_color));
     font_im.loadFromCurrentSurface(renderer);
     SDL_Rect positionTexte;
-    positionTexte.x = 500;
-    positionTexte.y = 300;
-    positionTexte.w = 800;
-    positionTexte.h = 50;
+    positionTexte.x = 100;
+    positionTexte.y = 350;
+    positionTexte.w = 1600;
+    positionTexte.h = 80;
     SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTexte);
+
+   //Afficher le texte d'information supplémentaire
+    font_im.setSurface(TTF_RenderText_Solid(font, "en evitant les monstres, et en utilisant des techniques et des strategies appropriees !", font_color));
+    font_im.loadFromCurrentSurface(renderer);
+    SDL_Rect positionTexteSupp;
+    positionTexteSupp.x = 100;
+    positionTexteSupp.y = 550;
+    positionTexteSupp.w = 1600;
+    positionTexteSupp.h = 80;
+    SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTexteSupp);
 
     SDL_RenderPresent(renderer);
 
@@ -469,25 +506,25 @@ void SDLSimple::menuAfficheGameOver() {
     SDL_RenderClear(renderer);
     im_menu.draw(renderer, 0,0,1800 ,900);                  //Image menu
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    font_color.r = 0;
-    font_color.g = 0;
-    font_color.b = 0;
+    font_color.r = 255;
+    font_color.g = 255;
+    font_color.b = 255;
 
     //Afficher GAME OVER
     font_im.setSurface(TTF_RenderText_Solid(font, "GAME OVER", font_color));
     font_im.loadFromCurrentSurface(renderer);
     SDL_Rect positionGameOver;
-    positionGameOver.x = 400;
+    positionGameOver.x = 600;
     positionGameOver.y = 200;
     positionGameOver.w = 600;
     positionGameOver.h = 50;
     SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionGameOver);
 
     //Afficher le message
-    font_im.setSurface(TTF_RenderText_Solid(font, "Vous avez perdu...", font_color));
+    font_im.setSurface(TTF_RenderText_Solid(font, "Vous avez perdu . . .", font_color));
     font_im.loadFromCurrentSurface(renderer);
     SDL_Rect positionMessage;
-    positionMessage.x = 400;
+    positionMessage.x = 600;
     positionMessage.y = 400;
     positionMessage.w = 600;
     positionMessage.h = 50;
@@ -655,15 +692,15 @@ void SDLSimple::sdlBoucle () {
             font_im.setSurface(TTF_RenderText_Solid(font, timer_string, font_color));
             font_im.loadFromCurrentSurface(renderer);
             SDL_Rect positionTimer; // position du texte sur l'écran
-            positionTimer.x = 1500; positionTimer.y = 20; positionTimer.w =200;positionTimer.h = 50;
+            positionTimer.x = 1450; positionTimer.y = 60; positionTimer.w =200;positionTimer.h = 30;
             SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTimer);
 
             int nb_mob = jeu.getVectorMonstre().size();
-            sprintf(number_string, "Monster alive :%d  " ,nb_mob);
+            sprintf(number_string, "M O N S T E R S  A L I V E : %d  " ,nb_mob);
             font_im.setSurface(TTF_RenderText_Solid(font, number_string, font_color));
             font_im.loadFromCurrentSurface(renderer);
             SDL_Rect positionNumber; // position du texte sur l'écran
-            positionNumber.x = 1500; positionNumber.y = 80; positionNumber.w =200;positionNumber.h = 50;
+            positionNumber.x = 1450; positionNumber.y = 20; positionNumber.w =300;positionNumber.h = 30;
             SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionNumber);
 
 		// on permute les deux buffers (cette fonction ne doit se faire qu'une seule fois dans la boucle)

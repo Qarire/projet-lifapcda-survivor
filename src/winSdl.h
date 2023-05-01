@@ -44,6 +44,7 @@ private :
 
     /** @brief pour le fonts*/
     TTF_Font * font;
+    TTF_Font * font2;
     Image font_im;
     SDL_Color font_color;
 
