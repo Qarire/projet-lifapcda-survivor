@@ -63,7 +63,7 @@ private :
     Image im_monstre;
     Image im_projectile;
     Image im_remplirTerrain;
-    
+    Image im_menu;
 
 
     bool souris;

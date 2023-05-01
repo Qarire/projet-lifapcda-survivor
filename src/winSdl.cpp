@@ -136,6 +136,7 @@ SDLSimple::SDLSimple () : jeu() {
     im_terrain.loadFromFile("data/Black_blocs.jpg", renderer);
     im_projectile.loadFromFile("data/projectile.png", renderer);
     im_remplirTerrain.loadFromFile("data/7.webp", renderer);
+    im_menu.loadFromFile("data/62054.jpg", renderer);
    
 
   // FONTS
@@ -310,7 +311,8 @@ void SDLSimple::sdlAff () {
 void SDLSimple::menuAff () {
 
 SDL_RenderClear(renderer);
-SDL_SetRenderDrawColor(renderer, 255,255, 255, 255);
+SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Couleur noire
+im_menu.draw(renderer, 0,0,1800 ,900);                  //Image menu
 font_color.r = 0; font_color.g = 0; font_color.b = 0;
 
 // Afficher le 1er choix : JEU SURVIVOR
@@ -331,29 +333,37 @@ SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionbouton);
 font_im.setSurface(TTF_RenderText_Solid(font, "A PROPOS DU JEU (2)", font_color));
 font_im.loadFromCurrentSurface(renderer);
 SDL_Rect positionA;
-positionA.x = 850; positionA.y = 500; positionA.w = 300; positionA.h = 50;
+positionA.x = 850; positionA.y = 450; positionA.w = 300; positionA.h = 50;
 SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionA);
 
 // Afficher le 4ème choix : INFO DEVELOPPEURS
 font_im.setSurface(TTF_RenderText_Solid(font, "INFO DEVELOPPEURS (3)", font_color));
 font_im.loadFromCurrentSurface(renderer);
 SDL_Rect positionInfo;
-positionInfo.x = 850; positionInfo.y = 700; positionInfo.w = 300; positionInfo.h = 50;
+positionInfo.x = 850; positionInfo.y = 600; positionInfo.w = 300; positionInfo.h = 50;
 SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionInfo);
 
 // Afficher le 5ème choix : QUITER
 font_im.setSurface(TTF_RenderText_Solid(font, "QUITTER (Esc)", font_color));
 font_im.loadFromCurrentSurface(renderer);
 SDL_Rect positionQuitter;
-positionQuitter.x = 900; positionQuitter.y = 900; positionQuitter.w = 200; positionQuitter.h = 50;
+positionQuitter.x = 900; positionQuitter.y = 750; positionQuitter.w = 200; positionQuitter.h = 50;
 SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionQuitter);
 
-SDL_RenderPresent(renderer);
 
+SDL_Rect recta;
+recta.x = 750; // Coordonnées x du coin supérieur gauche
+recta.y = 200; // Coordonnées y du coin supérieur gauche
+recta.w = 450; // Largeur du rectangle
+recta.h = 650; // Hauteur du rectangle
+SDL_RenderDrawRect(renderer, &recta); // Dessiner le rectangle
+
+SDL_RenderPresent(renderer);// Mettre à jour l'affichage
 }
 
 void SDLSimple::menuAfficheInfoDev() {
     SDL_RenderClear(renderer);
+    im_menu.draw(renderer, 0,0,1800 ,900);                  //Image menu
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     font_color.r = 0;
     font_color.g = 0;
@@ -392,6 +402,7 @@ void SDLSimple::menuAfficheInfoDev() {
                     }
                     break;
                 case SDL_QUIT:
+                    Mix_PlayChannel(-1,s_choix_menu,0);
                     quitter = true;
                     break;
                 default:
@@ -403,6 +414,7 @@ void SDLSimple::menuAfficheInfoDev() {
 
 void SDLSimple::menuAfficheDescription() {
     SDL_RenderClear(renderer);
+    im_menu.draw(renderer, 0,0,1800 ,900);                  //Image menu
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     font_color.r = 0;
     font_color.g = 0;
@@ -441,6 +453,7 @@ void SDLSimple::menuAfficheDescription() {
                     }
                     break;
                 case SDL_QUIT:
+                    Mix_PlayChannel(-1,s_choix_menu,0);
                     quitter = true;
                     break;
                 default:
@@ -454,6 +467,7 @@ void SDLSimple::menuAfficheGameOver() {
     SDL_Event event;
     bool quit_gameover = false;
     SDL_RenderClear(renderer);
+    im_menu.draw(renderer, 0,0,1800 ,900);                  //Image menu
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     font_color.r = 0;
     font_color.g = 0;
@@ -487,7 +501,9 @@ void SDLSimple::menuAfficheGameOver() {
                 quit_gameover = true;
             }
             else if (event.type == SDL_KEYDOWN) {
-                if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
+               if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
+                    //Mix_PlayChannel(-1,s_choix_menu,0);
+                    //resetJeu();
                     quit_gameover = true;
                     menuBoucle(); // Revenir au menu
                 }
@@ -504,12 +520,12 @@ void SDLSimple::menuAfficheGameOver() {
 void SDLSimple::menuBoucle ()  {
     SDL_Event events;
 	bool quit_menu = false;
-
     
     while (!quit_menu) { 
         
-        if (withSound) menu_active_channel= Mix_PlayChannel(-1,s_menu_musique,0); //Musique menu
-
+        if (withSound && !Mix_Playing(menu_active_channel)) { //Pour résoudre le problème du son, on vérifier si le son n'est pas déja actif
+        menu_active_channel= Mix_PlayChannel(-1,s_menu_musique,0); //Musique menu
+        }
         while (SDL_PollEvent(&events)) {
 			if (events.type == SDL_QUIT) quit_menu = true;           // Si l'utilisateur a clique sur la croix de fermeture
 			else if (events.type == SDL_KEYDOWN) {                   // Si une touche est enfoncee
@@ -534,12 +550,11 @@ void SDLSimple::menuBoucle ()  {
                             break;
 				            default: break;
                     }
-       
                 }
             }
 	    menuAff();
-        SDL_RenderPresent(renderer);
-    }			
+    }		
+    SDL_RenderPresent(renderer);	
 }
     
                   
@@ -579,8 +594,8 @@ void SDLSimple::sdlBoucle () {
 			jeu.genereMonstre(jeu.getTerrain());
 		}	
         if (nt-t_projectile>=3000){ // On ajoute un projectile chaque 3 secondes
-			t_projectile=nt;
-            jeu.genereProjectile(jeu.getPersonnage());
+			tprojectile=nt;
+           jeu.genereProjectile(jeu.getPersonnage());
             Mix_PlayChannel(-1,s_tire_projectile,0);
 		}
 
