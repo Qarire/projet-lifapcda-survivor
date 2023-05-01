@@ -31,21 +31,24 @@ public:
 
 
 /**
-    La classe gerant le jeu avec un affichage SDL
+   @brief La classe gerant le jeu avec un affichage SDL
 */
 class SDLSimple {
 
 private :
 
-	Jeu jeu;
+	Jeu jeu;                     /** @brief le jeu*/
 
     SDL_Window * window;
     SDL_Renderer * renderer;
 
+    /** @brief pour le fonts*/
     TTF_Font * font;
     Image font_im;
     SDL_Color font_color;
 
+
+                /** @brief pointeurs sur différents sons */
     Mix_Chunk * s_jeu_musique;
     Mix_Chunk * s_menu_musique;
     Mix_Chunk * s_tire_projectile;
@@ -56,8 +59,9 @@ private :
     Mix_Chunk * s_start_effect;
     Mix_Chunk * s_clique_menu;
     
-    bool withSound;
+    bool withSound;   /** @brief booléan qui vérifier si le lib du son sont initialiser corectement*/
 
+    /** @brief les images*/
     Image im_personnage;
     Image im_terrain;
     Image im_monstre;
@@ -65,26 +69,21 @@ private :
     Image im_remplirTerrain;
     Image im_menu;
 
-
-    bool souris;
-    bool touche;
 public :
 
-    int menu_active_channel; //Stocké le num du canal qui joue la musique du menu
-    int jeu_active_channel; //Stocké le num du canal qui joue la musique du jeu
+    int menu_active_channel; /** @brief entier tocké le num du canal qui joue la musique du menu **/
+    int jeu_active_channel;  /** @brief entier pour socké le num du canal qui joue la musique du  */
 
-    SDLSimple ();
-    ~SDLSimple ();
-    void sdlBoucle (); //Boucle jeu
-    void menuBoucle ();//Boucle menu
-    void sdlAff ();    // Affiche jeu
-    void menuAff();    //Affiche menu jeu
-    void menuAfficheInfoDev() ; //Afficher INfo dev
-    void menuAfficheDescription();  //Afficher une discription du jeu
-    void menuAfficheGameOver(); //Afficher GAME OVER
+    SDLSimple ();                   /** @brief constructeur de la cleasse */
+    ~SDLSimple ();                  /** @brief déstructeur de la classe */
+    void sdlBoucle ();              /** @brief Boucle du jeu */
+    void menuBoucle ();             /** @brief Boucle du menu */
+    void sdlAff ();                 /** @brief procédure qui affiche jeu */
+    void menuAff();                 /** @brief Affiche le menu du jeu */
+    void menuAfficheInfoDev() ;     /** @brief Afficher le menu info devloppeurs */
+    void menuAfficheDescription();  /** @brief Afficher un menu sur la discription du jeu */
+    void menuAfficheGameOver();     /** @brief Afficher le menu de fin du jeu */
 
 };
-
-
 
 #endif

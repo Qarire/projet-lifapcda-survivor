@@ -9,11 +9,11 @@
 
 class Jeu {
 private:
-    int temps;
-    Terrain map;
-    Personnage joueur;
-    vector<Projectile> proj;
-    vector<Monstre> mob;
+    int temps;               /** @brief temps*/
+    Terrain map;            /** @brief terrain*/
+    Personnage joueur;      /** @brief le personnage*/
+    vector<Projectile> proj;/** @brief tableau dynamique de projectiles*/
+    vector<Monstre> mob;    /** @brief tableau dynamique de monstres*/
 
 public:
     /** @brief recupere le temps **/
@@ -44,31 +44,37 @@ public:
     /** @brief recupere le tableau dynamique de projectile*/
 
     void degats_collision_mob(const Terrain &map, Monstre &mob, Personnage &joueur);
-    /** @brief Procédure qui gère les degats infliger entre un différente entité **/
+    /** @brief Procédure qui gère les degats infliger entre le personnage et un monstre
+     @param le terrain, le monstre et le personnage **/
 
     void degats_collision_proj(const Terrain &map, Monstre &mob, Projectile &proj);
+     /** @brief Procédure qui gère les degats infliger entre un monstre et un projectile
+     *@param le terrain, le monstre et le projectile **/
 
     void genereMonstre(const Terrain &map);
-    /** @brief Genere un monstre aleatoirement sur le terrain **/
-
+    /** @brief Genere un monstre aleatoirement sur le terrain 
+     *@param le terrain **/
+    
     void genereProjectile(const Personnage &joueur);
-    /** @brief genere un Projectile sur la coordonnée du personnage **/
+    /** @brief genere un Projectile sur la coordonnée du personnage 
+     * @param le personnage**/
 
     bool FinJeu (const Personnage &joueur);
-    /** @brief Test si le jeu est terminer ou non **/
-
+    /** @brief Test si le jeu est terminer ou non 
+     * @param le personnage **/
 
     bool actionClavier(const char touche);
-    /** @brief action clavier */
+    /** @brief gerer les actions du clavier 
+     * @param   la touche sur laquelle onappuie  */
 
     void actionAutomatiques();
     /** @brief action automatique, notamment déplacement auto des monstres et tire projectile*/
 
     void verifierLimitesJoueur(const Terrain &map);
+    /** @brief permet les déplacement du personnage à travers le bordure du terrain
+     * @param le terrain    */
 
-    void verifierLimitesJoueur2(const Terrain &map);
 };
-
 
 #endif
 

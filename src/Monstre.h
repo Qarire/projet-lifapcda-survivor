@@ -9,29 +9,27 @@
 #define DIST 3
 using namespace std;
 
-
-
 class Monstre 
 {
 	private:
 	/**
-  	 @brief x,y : les composantes du monstre, pv: ses pint de vie
+  	 @brief x,y : les composantes du monstre, pv: ses points de vie
   	 * */
 	Vecteur m_pos;
 	int m_pv;
 	
 	public :
-	bool col_mob_per;
-	 /**
-     	@brief Constructeur par défaut de la classe: initialise la position de monstre, ses points de vie
-    	 **/
-    	 
+	bool col_mob_per; 		/** @brief booléan permet de gérer le son de collision*/
+
+	 /** @brief Constructeur par défaut de la classe: initialise la position de monstre, ses points de vie  **/
+
      	Monstre();
     	 /**
     	 @brief destructeur par défaut de la classe: initialise la position de monstre, ses points de vie
    	  **/
+
 	 	Monstre(Vecteur p, int hp);
-		/** @brief Constructeur  */
+		/** @brief Constructeur par copie */
 
 
    	  	~Monstre();
@@ -44,33 +42,30 @@ class Monstre
 		void depHaut   (const Terrain &t);
 		void depBas    (const Terrain &t);
 	
-	/**
-     	@brief accesseur pour récuperer les points de vie d'un monstre
-     	**/
+	/** @brief accesseur pour récuperer les points de vie d'un monstre **/
 	int getPV() const;
 	
 	void setPV(int hp);
-	/** @brief Mutateur pour modifier les points de vie d'un monstre*/
+	/** @brief Mutateur pour modifier les points de vie d'un monstre
+	 * @param un entier	*/
 	
-	/**
-     	@brief accesseur pour récuperer les coordonnées x,y d'un monstre
-     	**/
 	Vecteur getPos() const;
-	 
-	/**
-     	@brief retourne un booleen qui indique si le monstre et mort ou pas
-     	**/
+	/** @brief accesseur pour récuperer les coordonnées x,y d'un monstre **/
+
 	void setPos(Vecteur position);
-	/** @brief modifie le vecteur position du monstre */
+	/** @brief modifie le vecteur position du monstre 
+	 * @param vecteur position	*/
+
 	bool enVie() const;
 	/* @brief renvoie true si le monstre est en vie et false si le monstre est mort */
 	
 	void poursuitePerso(const Terrain &t, const Personnage &p);
-	/**
-     	@brief procédure qui permet au monstre de suivre le pernonnage
-    **/	 
+	/** @brief procédure qui permet au monstre de suivre le pernonnage 
+	 * @param le terrain et le personnage **/	 
 
    void deplacementNaturel(const Terrain &t);
+   /** @brief procédure qui permet au monstre de  se déplacer dans une direction aléatoirement
+	 * @param le terrain **/	 
 };
 
 #endif

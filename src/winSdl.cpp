@@ -300,7 +300,7 @@ void SDLSimple::sdlAff () {
 
     for(unsigned int i=0;i<proj.size();i++)
 	{
-        if (proj.at(i).col_proj_mob) Mix_PlayChannel(-1,s_degat_projectile,0); //colision = son
+        //if (proj.at(i).col_proj_mob) Mix_PlayChannel(-1,s_degat_projectile,0); //colision = son
         im_projectile.draw(renderer,proj.at(i).getpos().getX(),proj.at(i).getpos().getY(),10,10);
 	}
     
@@ -506,6 +506,7 @@ void SDLSimple::menuAfficheGameOver() {
                     //resetJeu();
                     quit_gameover = true;
                     menuBoucle(); // Revenir au menu
+                   // menuAff();
                 }
             }
         }
@@ -579,8 +580,12 @@ void SDLSimple::sdlBoucle () {
 
 	// tant que ce n'est pas la fin ...
 	while (!quit_jeu) {
-
-
+/*
+        for(unsigned int i=0;i<proj.size();i++)
+            {
+                if (proj.at(i).col_proj_mob) Mix_PlayChannel(-1,s_degat_projectile,0); //colision = son
+            }
+*/
         nt = SDL_GetTicks();
         if (nt-t_auto>40) {
             jeu.actionAutomatiques();
@@ -594,7 +599,7 @@ void SDLSimple::sdlBoucle () {
 			jeu.genereMonstre(jeu.getTerrain());
 		}	
         if (nt-t_projectile>=3000){ // On ajoute un projectile chaque 3 secondes
-			tprojectile=nt;
+			t_projectile=nt;
            jeu.genereProjectile(jeu.getPersonnage());
             Mix_PlayChannel(-1,s_tire_projectile,0);
 		}

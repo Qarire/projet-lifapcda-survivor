@@ -127,98 +127,6 @@ bool Jeu::actionClavier(const char touche)
 }
 
 
-void Jeu::verifierLimitesJoueur(const Terrain &map)
-{
-    // Vérifier si le joueur a atteint les limites de l'écran
-    if (joueur.getPos().getX() >= map.getDimx()) {
-        // Si le joueur atteint le bord droit, le faire réapparaître sur le bord gauche
-        joueur.setPos(Vecteur(1, joueur.getPos().getY()));
-    }
-    else if (joueur.getPos().getX() <= 0) {
-        // Si le joueur atteint le bord gauche, le faire réapparaître sur le bord droit
-        joueur.setPos(Vecteur(map.getDimx()-1, joueur.getPos().getY()));
-    }
-    else if (joueur.getPos().getY() >= map.getDimy()) {
-        // Si le joueur atteint le bord bas, le faire réapparaître sur le bord haut
-        joueur.setPos(Vecteur(joueur.getPos().getX(), 1));
-    }
-    else if (joueur.getPos().getY() <= 0) {
-        // Si le joueur atteint le bord haut, le faire réapparaître sur le bord bas
-        joueur.setPos(Vecteur(joueur.getPos().getX(), map.getDimy()-1));
-    }
-   // cout <<"Jx= "<<joueur.getPos().getX()<<endl;
-   // cout <<"Jy= "<<joueur.getPos().getY()<<endl;
-   // cout <<"Mx= "<<map.getDimx()<<endl;
-   // cout <<"My= "<<map.getDimy()<<endl;
-}
-
-
-
-
-/*void Jeu::actionAutomatiques()
-{
-    // parcourir les monstres
-    cout<<"On parcour les monstres :"<<endl;
-    for (auto it = mob.begin(); it != mob.end();)
-    {
-        // si le monstre est mort, le supprimer
-        if (!it->enVie())
-        {
-            it = mob.erase(it);
-        }
-        else
-        {
-            // poursuivre le personnage
-            it->poursuitePerso(map, joueur);     cout<<"Le monstre suit le perso :"<<endl;
-            // infliger des dégâts au personnage en cas de collision
-            degats_collision_mob(map, *it, joueur); cout<<" degat colision monstre :"<<endl;
-            // trouver le projectile le plus proche du monstre
-            double distance_min = std::numeric_limits<double>::infinity();
-            int index_proj_proche = -1;
-
-            // Boucle sur les projectiles
-            cout<<" boucle sur les projectiles :"<<endl;
-             for (auto it_p = proj.begin(); it_p != proj.end();) 
-             {
-                if (!it_p->enVie()) 
-                {   cout<<" on vrifier si le projectile a touché un monstre pour l'effacer :"<<endl;
-                    it_p = proj.erase(it_p);
-                }
-                else{
-                    double distance = map.getDistance(it->getPos().getX(), it->getPos().getY(), it_p->getpos().getX(), it_p->getpos().getY());
-                    
-                if (distance < distance_min)
-                {
-                    distance_min = distance;
-                    index_proj_proche = std::distance(proj.begin(), it_p);
-                     cout<<"Le monstre le plus proche est loin de : "<<distance_min<<" px"<<endl;
-                     cout<<" sont index est  :"<<index_proj_proche<<endl;
-                }
-                    else cout<<"Dans le else"<<endl;
-                    return;
-                }
-            } cout<<" Sortie boucle proj :"<<endl;
-            // si un projectile est trouvé, envoyer le projectile sur le monstre
-            if (index_proj_proche != -1)
-            {
-                cout<<" avant proj poursuit monstre :"<<endl;
-                proj[index_proj_proche].ProjectilePoursuiteMonstre(it->getPos(), map);
-                cout<<" aprés proj poursuit monstre :"<<endl;
-                // infliger des dégâts au monstre
-                degats_collision_proj(map, *it, proj[index_proj_proche]);
-            }
-            else
-            {
-                // déplacement automatique du monstre
-                it->poursuitePerso(map, joueur);
-            }
-            ++it; 
-        }
-    }
-}*/
-
-
-
 void Jeu::actionAutomatiques()
 {   
     // Parcourir les monstres
@@ -298,7 +206,7 @@ void Jeu::actionAutomatiques()
     }
 }
 
-void Jeu::verifierLimitesJoueur2(const Terrain &map)
+void Jeu::verifierLimitesJoueur(const Terrain &map)
 {
     // Vérifier si le joueur a atteint les limites de l'écran
     if (joueur.getPos().getX() >= map.getDimx() && joueur.getPos().getY() >= map.getDimy()/3 && joueur.getPos().getY() <= map.getDimy()*2/3) {
