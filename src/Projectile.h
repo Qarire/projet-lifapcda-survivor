@@ -51,10 +51,6 @@ class Projectile {
 		/** @brief deplacement bas projectile 
 		 * @param le terrain		*/
 
-		void depAuto (const Terrain &t);
-		/** @brief deplacement auto projectile
-		 * @param le terrain */
-		
     	Vecteur getvit() const;
 		/** @brief accesseur pour récuperer la vitesse */
 		 

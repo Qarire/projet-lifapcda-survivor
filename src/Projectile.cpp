@@ -66,13 +66,6 @@ void Projectile::depBas(const Terrain &t)
 }
 
 
-void Projectile::depAuto (const Terrain &t) {
-    if (t.positionValide(p.getX(),p.getY())) {
-        depDroite(t);
-    }
-
-}
-
 
 Vecteur Projectile::getpos() const {
 
