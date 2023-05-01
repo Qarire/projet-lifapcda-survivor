@@ -574,6 +574,7 @@ void SDLSimple::sdlBoucle () {
     srand(time(NULL));
     int start_time = SDL_GetTicks(); // temps en millisecondes depuis le lancement du programme
     char timer_string[50]; // chaîne de caractères pour stocker le temps
+    char number_string[50];
     int minutes = 0;
     int seconds = 0;
 
@@ -656,6 +657,14 @@ void SDLSimple::sdlBoucle () {
             SDL_Rect positionTimer; // position du texte sur l'écran
             positionTimer.x = 1500; positionTimer.y = 20; positionTimer.w =200;positionTimer.h = 50;
             SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTimer);
+
+            int nb_mob = jeu.getVectorMonstre().size();
+            sprintf(number_string, "Monster alive :%d  " ,nb_mob);
+            font_im.setSurface(TTF_RenderText_Solid(font, number_string, font_color));
+            font_im.loadFromCurrentSurface(renderer);
+            SDL_Rect positionNumber; // position du texte sur l'écran
+            positionNumber.x = 1500; positionNumber.y = 80; positionNumber.w =200;positionNumber.h = 50;
+            SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionNumber);
 
 		// on permute les deux buffers (cette fonction ne doit se faire qu'une seule fois dans la boucle)
         SDL_RenderPresent(renderer);
