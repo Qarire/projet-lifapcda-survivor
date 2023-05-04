@@ -269,12 +269,23 @@ void SDLSimple::sdlAff () {
     font_color.r = 0;font_color.g = 0;font_color.b = 0;
     int pv=per.getPV();
     char pv_string[50];
-    sprintf(pv_string, " L i f e : %d",pv);
+    sprintf(pv_string, " L I F E : %d",pv);
 	font_im.setSurface(TTF_RenderText_Solid(font,pv_string,font_color));
 	font_im.loadFromCurrentSurface(renderer);
     SDL_Rect positionTitre;
-    positionTitre.x = 20;positionTitre.y = 20;positionTitre.w =200;positionTitre.h = 30;
+    positionTitre.x = 20;positionTitre.y = 140;positionTitre.w =150;positionTitre.h = 30;
     SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionTitre);
+
+    // Affichage LE NOMBRE DE MONSTRES TUER
+    font_color.r = 0;font_color.g = 0;font_color.b = 0;
+    int dead=jeu.nb_monstres_tuer;
+    char dead_string[50];
+    sprintf(dead_string, " M O N S T E R S  D E A D : %d",dead);
+	font_im.setSurface(TTF_RenderText_Solid(font,dead_string,font_color));
+	font_im.loadFromCurrentSurface(renderer);
+    SDL_Rect positionTitreDead;
+    positionTitreDead.x = 20;positionTitreDead.y = 20;positionTitreDead.w =300;positionTitreDead.h = 30;
+    SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionTitreDead);
     
     //Dessin du terrain
     for(unsigned int i=0;i<ter.getDimx();i++) // 1ere ligne horizontale
@@ -542,7 +553,7 @@ void SDLSimple::menuAfficheGameOver() {
                     //Mix_PlayChannel(-1,s_choix_menu,0);
                     //resetJeu();
                     quit_gameover = true;
-                    menuBoucle(); // Revenir au menu
+                    //menuBoucle(); // Revenir au menu
                    // menuAff();
                 }
             }
@@ -564,6 +575,7 @@ void SDLSimple::menuBoucle ()  {
         if (withSound && !Mix_Playing(menu_active_channel)) { //Pour résoudre le problème du son, on vérifier si le son n'est pas déja actif
         menu_active_channel= Mix_PlayChannel(-1,s_menu_musique,0); //Musique menu
         }
+
         while (SDL_PollEvent(&events)) {
 			if (events.type == SDL_QUIT) quit_menu = true;           // Si l'utilisateur a clique sur la croix de fermeture
 			else if (events.type == SDL_KEYDOWN) {                   // Si une touche est enfoncee
@@ -571,11 +583,11 @@ void SDLSimple::menuBoucle ()  {
 				        case SDL_SCANCODE_1: 
                             Mix_HaltChannel(menu_active_channel);   //Arreter la musique du menu
                             Mix_PlayChannel(-1,s_choix_menu,0);     // son des touches
-                            sleep(1);
+                            //sleep(1);
                             if (withSound) Mix_PlayChannel(-1,s_start_effect,0);
                             if (withSound) jeu_active_channel= Mix_PlayChannel(-1,s_jeu_musique,0); // On joue la musique du jeu
                             sdlBoucle();  
-                            sleep(1);
+                            //sleep(1);
                             break;
                         case SDL_SCANCODE_2: Mix_PlayChannel(-1,s_choix_menu,0);
                               menuAfficheDescription();
@@ -632,11 +644,11 @@ void SDLSimple::sdlBoucle () {
 
         jeu.verifierLimitesJoueur(jeu.getTerrain()); // Verifier la position du personnage pour le placer dans l'écran
         
-		if (nt-t_monstre>=1000){ // On ajout un monstre chaque seconde
+		if (nt-t_monstre>=500){ // On ajout un monstre chaque seconde
 			t_monstre=nt;
 			jeu.genereMonstre(jeu.getTerrain());
 		}	
-        if (nt-t_projectile>=3000){ // On ajoute un projectile chaque 3 secondes
+        if (nt-t_projectile>=1500){ // On ajoute un projectile chaque 3 secondes
 			t_projectile=nt;
            jeu.genereProjectile(jeu.getPersonnage());
             Mix_PlayChannel(-1,s_tire_projectile,0);
@@ -675,7 +687,7 @@ void SDLSimple::sdlBoucle () {
         if(!jeu.FinJeu(jeu.getPersonnage())) {
             Mix_PlayChannel(-1,s_fin_jeu,0);
 			quit_jeu = true;
-            sleep(1);
+            //sleep(1);
             menuAfficheGameOver();
 		}
 		// on affiche le jeu sur le buffer cach�
@@ -687,20 +699,20 @@ void SDLSimple::sdlBoucle () {
             minutes = elapsed_time / 60;
             seconds = elapsed_time % 60;
             // Mettre à jour la chaîne de caractères pour afficher le temps
-            sprintf(timer_string, " T i m e : %02d:%02d", minutes, seconds);
+            sprintf(timer_string, " T I M E : %02d : %02d", minutes, seconds);
             // Créer la surface de texte et la charger dans la texture
             font_im.setSurface(TTF_RenderText_Solid(font, timer_string, font_color));
             font_im.loadFromCurrentSurface(renderer);
             SDL_Rect positionTimer; // position du texte sur l'écran
-            positionTimer.x = 1450; positionTimer.y = 60; positionTimer.w =200;positionTimer.h = 30;
+            positionTimer.x = 20; positionTimer.y = 100; positionTimer.w =150;positionTimer.h = 30;
             SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionTimer);
 
             int nb_mob = jeu.getVectorMonstre().size();
-            sprintf(number_string, "M O N S T E R S  A L I V E : %d  " ,nb_mob);
+            sprintf(number_string, " M O N S T E R S  A L I V E : %d  " ,nb_mob);
             font_im.setSurface(TTF_RenderText_Solid(font, number_string, font_color));
             font_im.loadFromCurrentSurface(renderer);
             SDL_Rect positionNumber; // position du texte sur l'écran
-            positionNumber.x = 1450; positionNumber.y = 20; positionNumber.w =300;positionNumber.h = 30;
+            positionNumber.x = 20; positionNumber.y = 60; positionNumber.w =300;positionNumber.h = 30;
             SDL_RenderCopy(renderer, font_im.getTexture(), nullptr, &positionNumber);
 
 		// on permute les deux buffers (cette fonction ne doit se faire qu'une seule fois dans la boucle)
